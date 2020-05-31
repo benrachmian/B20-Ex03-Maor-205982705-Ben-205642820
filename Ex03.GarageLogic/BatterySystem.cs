@@ -40,20 +40,21 @@ namespace Ex03.GarageLogic
 
         public override void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType)
         {
-            throw new ArgumentException("You tried to charge the vehicle's battery with fuel!");
+            throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
         }
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
-            if(m_MaxBatteryTime - m_BatteryTimeRemaining <= i_HoursToAdd)
+            if(m_MaxBatteryTime - m_BatteryTimeRemaining > i_HoursToAdd)
             {
                 m_BatteryTimeRemaining += i_HoursToAdd;
             }
             else
             {
-                // THROW EXPECTION TOO MUCH HOURS TO ADD throw (m_MaxBatteryTime - m_BatteryTimeRemaining)
+                throw new ValueOutOfRangeException(m_MaxBatteryTime - m_BatteryTimeRemaining, 0);
             }
         }
+
         public override float GetEnergyLeftInPrecents()
         {
             return (m_BatteryTimeRemaining / m_MaxBatteryTime) * 100;

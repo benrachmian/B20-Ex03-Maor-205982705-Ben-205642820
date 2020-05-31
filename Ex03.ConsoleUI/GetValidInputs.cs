@@ -9,20 +9,18 @@ namespace Ex03.ConsoleUI
 {
     class GetValidInputs
     {
-        
-        
+        //public static float GetPositiveNumber()
+        //{
+        //    float inputNum;
 
-        public static float GetPositiveNumber()
-        {
-            float inputNum;
+        //    while (!float.TryParse(Console.ReadLine(), out inputNum) || inputNum < 0)
+        //    {
+        //        Console.WriteLine("You must insert positive number! Try again!");
+        //        throw new FormatException("You must insert positive number! Try again!");
+        //    }
 
-            while (!float.TryParse(Console.ReadLine(), out inputNum) || inputNum < 0)
-            {
-                Console.WriteLine("You must insert positive number! Try again!");
-            }
-
-            return inputNum;
-        }
+        //    return inputNum;
+        //}
 
         public static int GetValidInputNumber(int i_MinRange, int i_MaxRange)
         {
@@ -68,14 +66,14 @@ namespace Ex03.ConsoleUI
             return inputStr;
         }
 
-        public static int GetValidInputNumber(float i_MinRange, float i_MaxRange)
+        public static float GetValidInputNumber(float i_MinRange, float i_MaxRange)
         {
             string inputStr;
-            int inputNum;
+            float inputNum;
             bool parseSuccessed;
 
             inputStr = Console.ReadLine();
-            parseSuccessed = int.TryParse(inputStr, out inputNum);
+            parseSuccessed = float.TryParse(inputStr, out inputNum);
             while (!parseSuccessed || !isInNumberRange(i_MinRange, i_MaxRange, inputNum))
             {
                 if (!parseSuccessed)
@@ -84,7 +82,7 @@ namespace Ex03.ConsoleUI
                 }
 
                 inputStr = Console.ReadLine();
-                parseSuccessed = int.TryParse(inputStr, out inputNum);
+                parseSuccessed = float.TryParse(inputStr, out inputNum);
             }
 
             return inputNum;

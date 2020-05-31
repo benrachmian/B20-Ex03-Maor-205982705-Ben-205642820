@@ -21,18 +21,6 @@ namespace Ex03.GarageLogic
             m_MaxValidPSI = i_MaxValidPSI;
         }
 
-        public void InflateTire(float i_AmountOfPsiToAdd)
-        {
-            if(m_MaxValidPSI - m_CurrentPSI < i_AmountOfPsiToAdd)
-            {
-                //throw exepction????
-            }
-            else
-            {
-                m_CurrentPSI += i_AmountOfPsiToAdd;
-            }
-        }
-
         //properties
         public float CurrentPSI
         {
@@ -61,5 +49,19 @@ namespace Ex03.GarageLogic
                 return m_ManufacturerName;
             }
         }
+
+        public void InflateTire(float i_AmountOfPsiToAdd)
+        {
+            if(m_MaxValidPSI - m_CurrentPSI < i_AmountOfPsiToAdd)
+            {
+                throw new ValueOutOfRangeException(m_MaxValidPSI - m_CurrentPSI, 0);
+            }
+            else
+            {
+                m_CurrentPSI += i_AmountOfPsiToAdd;
+            }
+        }
+
+        
     }
 }

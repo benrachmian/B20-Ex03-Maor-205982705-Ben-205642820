@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
         Red = 1,
         White,
         Black,
-        Silver
+        Silver 
     }
 
     public class Car : Vehicle
@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
         private readonly uint m_NumOfDoors;
 
         public Car(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, eCarColors i_CarColor, uint i_NumOfDoors)
-            : base(i_Model,i_LicenseNumber,i_Tires, i_EnergySourceSystem)
+            : base(i_Model,i_LicenseNumber,i_Tires, i_EnergySourceSystem) //c'tor
         {
             m_CarColor = i_CarColor;
             m_NumOfDoors = i_NumOfDoors;
