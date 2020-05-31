@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
     {
         public static Vehicle CreateMotorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
         {
-            return new Motorcycle(i_Model, i_LicenseNumber, i_Tires, i_EnerySourceSystem, i_LicenseType, i_EngineVolume);
+            return new Motorcycle(i_Model, i_LicenseNumber, i_Tires, i_EnerySourceSystem, i_LicenseType, i_EngineVolume); 
         }
 
         public static Vehicle CreateCar (string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, eCarColors i_CarColor, uint i_NumOfDoors)

@@ -25,14 +25,35 @@ namespace Ex03.GarageLogic
         public const float k_MaxLitersInFuelCar = 60;
         public const float k_MaxHoursInElectricCar = 2.1f;
 
-        private eCarColors m_CarCoor;
-        private uint m_NumOfDoors;
+        private eCarColors m_CarColor;
+        private readonly uint m_NumOfDoors;
 
         public Car(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, eCarColors i_CarColor, uint i_NumOfDoors)
             : base(i_Model,i_LicenseNumber,i_Tires, i_EnergySourceSystem)
         {
-            m_CarCoor = i_CarColor;
+            m_CarColor = i_CarColor;
             m_NumOfDoors = i_NumOfDoors;
+        }
+
+        //public properties
+        public eCarColors CarColor
+        {
+            get
+            {
+                return m_CarColor;
+            }
+            set
+            {
+                m_CarColor = value;
+            }
+        }
+
+        public uint NumOfDoors
+        {
+            get
+            {
+                return m_NumOfDoors;
+            }
         }
 
         public override string GetModelName()

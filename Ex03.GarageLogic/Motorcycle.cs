@@ -25,13 +25,34 @@ namespace Ex03.GarageLogic
         public const int k_MinEngineVolume = 50;
         public const int k_MaxEngineVolume = 1200;
         private eLicenseTypes m_LicenseType;
-        private int m_EngineVolume;
+        private readonly int m_EngineVolume;
 
         public Motorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
             : base(i_Model,i_LicenseNumber,i_Tires,i_EnerySourceSystem)
         {
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
+        }
+
+        //public properties
+        public eLicenseTypes LicenseType
+        {
+            get
+            {
+                return m_LicenseType;
+            }
+            set
+            {
+                m_LicenseType = value;
+            }
+        }
+
+        public int EngineVolume
+        {
+            get
+            {
+                return m_EngineVolume;
+            }
         }
 
         public override string GetModelName()

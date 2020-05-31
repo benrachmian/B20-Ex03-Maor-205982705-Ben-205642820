@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
         float m_BatteryTimeRemaining;
         readonly float m_MaxBatteryTime;
 
-        public BatterySystem(float i_BatteryTimeRemaining, float i_MaxBatteryTime)
+        public BatterySystem(float i_BatteryTimeRemaining, float i_MaxBatteryTime) // c'tor
         {
             m_BatteryTimeRemaining = i_BatteryTimeRemaining;
             m_MaxBatteryTime = i_MaxBatteryTime;
@@ -25,16 +25,22 @@ namespace Ex03.GarageLogic
                 return m_MaxBatteryTime;
             }
         }
+        public float BatteryTimeRemaining
+        {
+            get
+            {
+                return m_BatteryTimeRemaining;
+            }
+            set
+            {
+                m_BatteryTimeRemaining = value;
+            }
+        }
 
 
         public override void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType)
         {
-            throw new NotImplementedException();
-        }
-
-        public override float GetEnergyLeftInPrecents()
-        {
-            return (m_BatteryTimeRemaining / m_MaxBatteryTime) * 100;
+            throw new ArgumentException("You tried to charge the vehicle's battery with fuel!");
         }
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
@@ -48,10 +54,15 @@ namespace Ex03.GarageLogic
                 // THROW EXPECTION TOO MUCH HOURS TO ADD throw (m_MaxBatteryTime - m_BatteryTimeRemaining)
             }
         }
+        public override float GetEnergyLeftInPrecents()
+        {
+            return (m_BatteryTimeRemaining / m_MaxBatteryTime) * 100;
+        }
+
 
         public override float GetMaxEnergyPossible()
         {
-            return m_MaxBatteryTime();
+            return m_MaxBatteryTime;
         }
     }
 }

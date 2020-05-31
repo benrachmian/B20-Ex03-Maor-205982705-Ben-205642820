@@ -37,6 +37,18 @@ namespace Ex03.GarageLogic
             }
         }
 
+        public float CurrFuelInLiters
+        {
+            get
+            {
+                return m_CurrFuelInLiters;
+            }
+            set
+            {
+                m_CurrFuelInLiters = value;
+            }
+        }
+
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
             throw new NotImplementedException();

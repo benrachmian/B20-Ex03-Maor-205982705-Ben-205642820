@@ -8,6 +8,10 @@ namespace Ex03.GarageLogic
 {
     abstract public class Vehicle
     {
+        public const int k_MinLicenseNumber = 6;
+        public const int k_MaxLicenseNumber = 8;
+        public const int k_MinModelCharacters = 3;
+        public const int k_MaxModelCharacters = 10;
         protected readonly string m_Model;
         protected readonly string m_LicenseNumber;
         protected float m_EnergyLeftInPrecents;
@@ -16,11 +20,11 @@ namespace Ex03.GarageLogic
 
         public Vehicle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem)
         {
-            string m_Model = i_Model;
-            string m_LicenseNumber = i_LicenseNumber;
-            Tire[] m_Tires = i_Tires;
-            EnergySourceSystem m_EnergySourceSystem = i_EnergySourceSystem;
-            float m_EnergyLeftInPrecents = m_EnergySourceSystem.GetEnergyLeftInPrecents();
+            m_Model = i_Model;
+            m_LicenseNumber = i_LicenseNumber;
+            m_Tires = i_Tires;
+            m_EnergySourceSystem = i_EnergySourceSystem;
+            m_EnergyLeftInPrecents = m_EnergySourceSystem.GetEnergyLeftInPrecents();
         }
 
         /// public properties

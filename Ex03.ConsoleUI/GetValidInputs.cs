@@ -9,10 +9,8 @@ namespace Ex03.ConsoleUI
 {
     class GetValidInputs
     {
-        private const int k_MinCharsForTireManufacturerName = 4;
-        private const int k_MaxCharsForTireManufacturerName = 50;
-        private const int k_MinLicenseNumber = 6;
-        private const int k_MaxLicenseNumber = 8;
+        
+        
 
         public static float GetPositiveNumber()
         {
@@ -46,6 +44,28 @@ namespace Ex03.ConsoleUI
             }
 
             return inputNum;
+        }
+
+        public static string GetValidLengthString(int i_MinRange, int i_MaxRange)
+        {
+            string inputStr;
+            int inputNum;
+            bool parseSuccessed;
+
+            inputStr = Console.ReadLine();
+            parseSuccessed = int.TryParse(inputStr, out inputNum);
+            while (!parseSuccessed || !isInNumberRange(i_MinRange, i_MaxRange, inputStr.Length))
+            {
+                if (!parseSuccessed)
+                {
+                    Console.WriteLine("You must enter digits only! Try again!");
+                }
+
+                inputStr = Console.ReadLine();
+                parseSuccessed = int.TryParse(inputStr, out inputNum);
+            }
+
+            return inputStr;
         }
 
         public static int GetValidInputNumber(float i_MinRange, float i_MaxRange)
@@ -96,7 +116,7 @@ namespace Ex03.ConsoleUI
 
         public static string GetValidTireManufacturer()
         {
-            return GetValidString("tire manufacturer");
+            return GetValidStringOnlyLetters("tire manufacturer",Tire.k_MinCharsForTireManufacturerName,Tire.k_MaxCharsForTireManufacturerName);
         }
 
         public static string GetValidPhoneNumber()
@@ -116,7 +136,7 @@ namespace Ex03.ConsoleUI
             return phoneNumber.ToString();
         }
 
-        public static string GetValidString(string i_TargetName)
+        public static string GetValidString(string i_TargetName, int i_MinRange, int i_MaxRange)
         {
             string inputString;
             bool isValid = false;
@@ -124,9 +144,9 @@ namespace Ex03.ConsoleUI
             do
             {
                 inputString = Console.ReadLine();
-                if (inputString.Length < k_MinCharsForTireManufacturerName || inputString.Length > k_MaxCharsForTireManufacturerName)
+                if (inputString.Length < i_MinRange || inputString.Length > i_MaxRange)
                 {
-                    Console.WriteLine("A {0} name must be at least {1} and maximum {2} characters. Please try again!", i_TargetName, k_MinCharsForTireManufacturerName, k_MaxCharsForTireManufacturerName);
+                    Console.WriteLine("A {0} name must be at least {1} and maximum {2} characters. Please try again!", i_TargetName, i_MinRange, i_MaxRange);
                 }
                 else if (!doesContainOnlyLettersAndNumbers(inputString))
                 {
@@ -139,6 +159,46 @@ namespace Ex03.ConsoleUI
             } while (!isValid);
 
             return inputString;
+        }
+
+        public static string GetValidStringOnlyLetters(string i_TargetName, int i_MinRange, int i_MaxRange)
+        {
+            string inputString;
+            bool isValid = false;
+
+            do
+            {
+                inputString = Console.ReadLine();
+                if (inputString.Length < i_MinRange || inputString.Length > i_MaxRange)
+                {
+                    Console.WriteLine("A {0} name must be at least {1} and maximum {2} characters. Please try again!", i_TargetName, i_MinRange, i_MaxRange);
+                }
+                else if (!doesContainOnlyLetters(inputString))
+                {
+                    Console.WriteLine("A {0} name must contain only letters.Please try again!", i_TargetName);
+                }
+                else
+                {
+                    isValid = true;
+                }
+            } while (!isValid);
+
+            return inputString;
+        }
+
+        private static bool doesContainOnlyLetters(string i_Str)
+        {
+            bool isOnlyLetters = true;
+
+            foreach (char c in i_Str)
+            {
+                if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z'))
+                {
+                    isOnlyLetters = false;
+                }
+            }
+
+            return isOnlyLetters;
         }
 
         private static bool doesContainOnlyLettersAndNumbers(string i_Str)
@@ -156,27 +216,27 @@ namespace Ex03.ConsoleUI
             return isOnlyLetters;
         }
 
-        public static float GetValidPSI()
+        public static float GetValidPSI() /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
         {
             // string PsiInput;
             float validPSI;
 
-            while(!float.TryParse(Console.ReadLine(), out validPSI))
+            while (!float.TryParse(Console.ReadLine(), out validPSI))
             {
 
             }
 
-            return ;
+            return 5;
         }
 
         public static string GetValidModel()
         {
-            return GetValidString("model");
+            return GetValidString("model",Vehicle.k_MinModelCharacters,Vehicle.k_MaxModelCharacters);
         }
 
         public static string GetValidLicenseNumber()
         {
-            return GetValidInputNumber(k_MinLicenseNumber,k_MaxLicenseNumber).ToString();
+            return GetValidLengthString(Vehicle.k_MinLicenseNumber,Vehicle.k_MaxLicenseNumber);
         }
     }
 }

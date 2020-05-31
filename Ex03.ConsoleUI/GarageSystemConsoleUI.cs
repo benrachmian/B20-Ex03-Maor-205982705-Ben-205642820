@@ -9,9 +9,9 @@ namespace Ex03.ConsoleUI
 {
     class GarageSystemConsoleUI
     {
-        
         private const int k_NumTypesOfVehicles = 5;
-       
+        private const int k_ExitOption = 8;
+
         private GarageSystem m_GarageSystem;
 
         public GarageSystemConsoleUI() // c'tor
@@ -21,18 +21,81 @@ namespace Ex03.ConsoleUI
 
         public void Menu()
         {
-            Console.WriteLine("Hello!{0}Welcome to the garage system!{0}What would you like to do?", Environment.NewLine);
+            int option;
+            Console.WriteLine(
+@"Hello!
+Welcome to the garage system!");
+
+            do
+            {
+                Console.WriteLine(
+@"What would you like to do?
+1. Insert a new car to garage
+2. Present vehicle's license number in garage
+3. Update status to vehicle in garage
+4. Inflate vehicle tires to max
+5. Refuel vehicle
+6. Recharge vehicle
+7. Print full details of specific vehicle in garage
+8. Exit");
+                option = GetValidInputs.GetValidInputNumber(1, 8);
+                switch (option)
+                {
+                    case 1:
+                        {
+                            AddNewVehicleToGarage();
+                            break;
+                        }
+                    case 2:
+                        {
+                            PresentVehicleLicenseNumberInGarage();
+                            break;
+                        }
+                    case 3:
+                        {
+                            ChangeVehicleStatus();
+                            break;
+                        }
+                    case 4:
+                        {
+                            InflateTires();
+                            break;
+                        }
+                    case 5:
+                        {
+                            Refuel();
+                            break;
+                        }
+                    case 6:
+                        {
+                            Recharge();
+                            break;
+                        }
+                    case 7:
+                        {
+                            printAllDetails();
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Bye-bye!");
+                            Environment.Exit(0);
+                            break;
+                        }
+                }
+            } while (option != k_ExitOption);
         }
 
-        public void GetAllDetails()
+        public void printAllDetails()
         {
-            string licenseNumber, modelNumber;
+            string licenseNumber;
             VehiclesInGarage vehicleToPresent;
-            Car carVehicle = vehicleToPresent.VehicleInfo as Car;
+            Car carVehicle;
             Motorcycle motorcycleVehicle;
             Truck truckVehicle;
+            FuelSystem vehicleFuelSystem;
+            BatterySystem vehicleBatterySystem;
 
-            Console.WriteLine("Insert vehicle's license number:");
             getLicenseNumber(out licenseNumber);
             try
             {
@@ -51,15 +114,116 @@ Tires PSI: {5}",
                 vehicleToPresent.VehicleStatus,
                 vehicleToPresent.VehicleInfo.Tires[0].ManufacturerName,
                 vehicleToPresent.VehicleInfo.Tires[0].CurrentPSI);
+                findVehicleType(vehicleToPresent.VehicleInfo, out carVehicle, out motorcycleVehicle, out truckVehicle);
+                findEnergySystemType(vehicleToPresent.VehicleInfo.VehicleEnergySourceSystem, out vehicleFuelSystem, out vehicleBatterySystem);
+                if (vehicleFuelSystem != null)
+                {
+                    printFuelSystemDetails(vehicleFuelSystem);
+                }
+                else
+                {
+                    printBatterySystemDetails(vehicleBatterySystem);
+                }
 
-
-
+                if (carVehicle != null)
+                {
+                    printCarDetails(carVehicle);
+                }
+                else if(motorcycleVehicle != null)
+                {
+                    printMotorcycleDetails(motorcycleVehicle);
+                }
+                else
+                {
+                    printTruckDetails(truckVehicle);
+                }
             }
             catch
             {
 
             }
+            Console.WriteLine("----------------Returning to menu----------------");
         }
+
+        private void printTruckDetails(Truck i_TruckToPrint)
+        {
+            Console.WriteLine(
+@"Is carrying dangerous matirials: {0}
+Trunk volume: {1}",
+           i_TruckToPrint.IsCarryingDangerousMaterials ? "Yes" : "No",
+           i_TruckToPrint.TrunkVolume);
+        }
+
+        private void printMotorcycleDetails(Motorcycle i_MotorcycleToPrint)
+        {
+            Console.WriteLine(
+@"License type: {0}
+Engine volume: {1}",
+            i_MotorcycleToPrint.LicenseType,
+            i_MotorcycleToPrint.EngineVolume);
+        }
+
+        private void printCarDetails(Car i_CarToPrint)
+        {
+            Console.WriteLine(
+@"Car color: {0}
+Number of doors: {1}",
+            i_CarToPrint.CarColor,
+            i_CarToPrint.NumOfDoors);
+        }
+
+        private void printBatterySystemDetails(BatterySystem i_VehicleBatterySystem)
+        {
+            Console.WriteLine(
+@"Battery left: {0} hours",
+            i_VehicleBatterySystem.BatteryTimeRemaining);
+        }
+
+        private void printFuelSystemDetails(FuelSystem i_VehicleFuelSystem)
+        {
+            Console.WriteLine(
+@"Fuel left: {0} liters
+Fuel type:{1}",
+            i_VehicleFuelSystem.CurrFuelInLiters,
+            i_VehicleFuelSystem.FuelType);
+        }
+
+        private void findEnergySystemType(EnergySourceSystem i_VehicleToCheckEnergySourseSystem, out FuelSystem o_VehicleFuelSystem, out BatterySystem o_VehicleBatterySystem)
+        {
+            o_VehicleFuelSystem = i_VehicleToCheckEnergySourseSystem as FuelSystem;
+            if(o_VehicleFuelSystem == null)
+            {
+                o_VehicleBatterySystem = i_VehicleToCheckEnergySourseSystem as BatterySystem;
+            }
+            else
+            {
+                o_VehicleBatterySystem = null;
+            }
+        }
+
+        private void findVehicleType(Vehicle i_VehicleToCheck, out Car o_CarVehicle, out Motorcycle o_MotorcycleVehicle, out Truck o_TruckVehicle)
+        {
+            o_CarVehicle = i_VehicleToCheck as Car;
+            if(o_CarVehicle == null)
+            {
+                o_MotorcycleVehicle = i_VehicleToCheck as Motorcycle;
+                if(o_MotorcycleVehicle == null)
+                {
+                    o_TruckVehicle = i_VehicleToCheck as Truck;
+                }
+                else
+                {
+                    o_TruckVehicle = null;
+                }
+            }
+            else
+            {
+                o_MotorcycleVehicle = null;
+                o_TruckVehicle = null;
+            }
+        }
+
+        
 
         public void Recharge()
         {
@@ -86,9 +250,8 @@ Tires PSI: {5}",
             }
             catch
             {
-                "max "
             }
-            
+            Console.WriteLine("----------------Returning to menu----------------");
         }
 
         private float getMaxBatteryAmount(VehiclesInGarage i_vehicle)
@@ -126,19 +289,24 @@ Tires PSI: {5}",
             vehicleToRefuel = getVehicleByLicenseNumber(licenseNumber);
             if (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem is FuelSystem)
             {
-                fuelType = getFuelType();
-                maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.GetMaxEnergyPossible();
-                Console.WriteLine("Please insert how many liters of fuel you would like to refuel:");
-                fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
-                m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
+                try
+                {
+                    fuelType = getFuelType();
+                    maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.GetMaxEnergyPossible();
+                    Console.WriteLine("Please insert how many liters of fuel you would like to refuel:");
+                    fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
+                    m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
+                }
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 //throw excpetion
             }
-
-
-           
+            Console.WriteLine("----------------Returning to menu----------------");
         }
 
         public void InflateTires()
@@ -148,6 +316,7 @@ Tires PSI: {5}",
             Console.WriteLine("Insert vehicle's license number:");
             getLicenseNumber(out licenseNumber);
             m_GarageSystem.InflateTiresToMax(licenseNumber);
+            Console.WriteLine("----------------Returning to menu----------------");
         }
 
         public void ChangeVehicleStatus()
@@ -166,6 +335,7 @@ Tires PSI: {5}",
             (int)eVehicleStatuses.Paid);
             int Option = GetValidInputs.GetValidInputNumber(1, 4);
             m_GarageSystem.ChangeVehicleStatus(licenseNumber, (eVehicleStatuses)Option);
+            Console.WriteLine("----------------Returning to menu----------------");
         }
 
         public void PresentVehicleLicenseNumberInGarage()
@@ -177,6 +347,7 @@ Tires PSI: {5}",
 3. Paid status
 4. All");
             int Option = GetValidInputs.GetValidInputNumber(1, 4);
+            Console.WriteLine("----------------The vehicles are:----------------");
             foreach (VehiclesInGarage vehicle in m_GarageSystem.VehiclesInTheGarage.Values)
             {
                 if (Option == 4 || vehicle.VehicleStatus == (eVehicleStatuses)Option)
@@ -184,17 +355,25 @@ Tires PSI: {5}",
                     Console.WriteLine(vehicle.VehicleInfo.LicenseNumber);
                 }
             }
+            Console.WriteLine("---------------------Returning to menu-----------------------------");
+            System.Threading.Thread.Sleep(500);
         }
 
         public void AddNewVehicleToGarage()
         {
             Console.WriteLine("Please insert the vehicle's owner's name:");
-            string ownersName = GetValidInputs.GetValidString("vehicle's owner's name");
+            string ownersName = GetValidInputs.GetValidStringOnlyLetters("vehicle's owner's name",VehiclesInGarage.k_MinCharactersForOwnersName,VehiclesInGarage.k_MaxCharactersForOwnersName);
             Console.WriteLine("Please insert vehicle's owner's phone number:");
             string ownersPhoneNumber = GetValidInputs.GetValidPhoneNumber();
             Vehicle vehicleToAdd = getNewVehicleInfo();
             VehiclesInGarage newVehicle = new VehiclesInGarage(ownersName, ownersPhoneNumber, vehicleToAdd);
             m_GarageSystem.AddNewVehicleToGarage(newVehicle);
+            Console.WriteLine("----------------Adding new vehicle to the system----------------");
+            System.Threading.Thread.Sleep(2000);
+            Console.WriteLine("----------------The vehicle was added successfully!----------------");
+            System.Threading.Thread.Sleep(1000);
+            Console.WriteLine("---------------------Returning to menu-----------------------------");
+            System.Threading.Thread.Sleep(500);
         }
 
         private Vehicle getNewVehicleInfo()
@@ -214,8 +393,8 @@ Tires PSI: {5}",
             getModel(out vehicleModel);
             getVehiliceType(out typeOfVehicle);
             getTypeOfEnergy(typeOfVehicle, out typeOfEnergy);
-            getCurrEnergyLeft(typeOfEnergy, out currEnergyLeft);
-            getNumOfWheelsMaxPsiTypeOfEnergyTypeOfFuelMaxEnergyUseTiresCreateEnergySourceSystem
+            
+            getNumOfWheelsMaxPsiTypeOfEnergyTypeOfFuelMaxAndCurrEnergyTiresCreateEnergySourceSystem
                 (typeOfVehicle,
                 out numOfWheels, 
                 out maxPSI,
@@ -224,7 +403,7 @@ Tires PSI: {5}",
                 out maxEnergyPossible,
                 out vehicleTires,
                 out vehicleEnergySourceSystem,
-                currEnergyLeft);
+                out currEnergyLeft);
 
             if (typeOfVehicle == eTypeOfVehicle.RegularMotorcycle || typeOfVehicle == eTypeOfVehicle.ElectricMotorcycle)
             {
@@ -270,7 +449,7 @@ Tires PSI: {5}",
             o_IsCarryingDangerousMaterials = answerInInt == 1 ? true : false;
         }
 
-        private void getNumOfWheelsMaxPsiTypeOfEnergyTypeOfFuelMaxEnergyUseTiresCreateEnergySourceSystem
+        private void getNumOfWheelsMaxPsiTypeOfEnergyTypeOfFuelMaxAndCurrEnergyTiresCreateEnergySourceSystem
             (eTypeOfVehicle i_TypeOfVehicle,
             out int o_NumOfWheels,
             out float o_MaxPSI,
@@ -279,7 +458,7 @@ Tires PSI: {5}",
             out float o_MaxEnergyToUse,
             out Tire[] o_Tires,
             out EnergySourceSystem o_EnergySourseSystem,
-            float i_CurrEnergyLeft)
+            out float o_CurrEnergyLeft)
         {
             switch(i_TypeOfVehicle)
             {
@@ -290,8 +469,9 @@ Tires PSI: {5}",
                         o_TypeOfEnergy = eTypeOfEnergy.Electic;
                         o_TypeOfFuel = null;
                         o_MaxEnergyToUse = Car.k_MaxHoursInElectricCar;
+                        getCurrEnergyLeft(o_TypeOfEnergy,o_MaxEnergyToUse, out o_CurrEnergyLeft);
                         getTires(o_NumOfWheels, o_MaxPSI, out o_Tires);
-                        o_EnergySourseSystem = new BatterySystem(i_CurrEnergyLeft, o_MaxEnergyToUse);
+                        o_EnergySourseSystem = new BatterySystem(o_CurrEnergyLeft, o_MaxEnergyToUse);
                         break;
                     }
                 case eTypeOfVehicle.ElectricMotorcycle:
@@ -301,8 +481,9 @@ Tires PSI: {5}",
                         o_TypeOfEnergy = eTypeOfEnergy.Electic;
                         o_TypeOfFuel = null;
                         o_MaxEnergyToUse = Motorcycle.k_MaxHoursInElectricMotorcycle;
+                        getCurrEnergyLeft(o_TypeOfEnergy, o_MaxEnergyToUse, out o_CurrEnergyLeft);
                         getTires(o_NumOfWheels, o_MaxPSI, out o_Tires);
-                        o_EnergySourseSystem = new BatterySystem(i_CurrEnergyLeft, o_MaxEnergyToUse);
+                        o_EnergySourseSystem = new BatterySystem(o_CurrEnergyLeft, o_MaxEnergyToUse);
                         break;
                     }
                 case eTypeOfVehicle.RegularCar:
@@ -312,8 +493,9 @@ Tires PSI: {5}",
                         o_TypeOfEnergy = eTypeOfEnergy.Fuel;
                         o_TypeOfFuel = eFuelType.Octan96;
                         o_MaxEnergyToUse = Car.k_MaxLitersInFuelCar;
+                        getCurrEnergyLeft(o_TypeOfEnergy, o_MaxEnergyToUse, out o_CurrEnergyLeft);
                         getTires(o_NumOfWheels, o_MaxPSI, out o_Tires);
-                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel,i_CurrEnergyLeft,o_MaxEnergyToUse);
+                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel, o_CurrEnergyLeft, o_MaxEnergyToUse);
                         break;
                     }
                 case eTypeOfVehicle.RegularMotorcycle:
@@ -323,8 +505,9 @@ Tires PSI: {5}",
                         o_TypeOfEnergy = eTypeOfEnergy.Fuel;
                         o_TypeOfFuel = eFuelType.Octan95;
                         o_MaxEnergyToUse = Motorcycle.k_MaxLitersInFuelMotorcycle;
+                        getCurrEnergyLeft(o_TypeOfEnergy, o_MaxEnergyToUse, out o_CurrEnergyLeft);
                         getTires(o_NumOfWheels, o_MaxPSI, out o_Tires);
-                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel,i_CurrEnergyLeft,o_MaxEnergyToUse);
+                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel, o_CurrEnergyLeft, o_MaxEnergyToUse);
                         break;
                     }
                 default: //eTypeOfVehicle.Truck:
@@ -334,8 +517,9 @@ Tires PSI: {5}",
                         o_TypeOfEnergy = eTypeOfEnergy.Fuel;
                         o_TypeOfFuel = eFuelType.Diesel;
                         o_MaxEnergyToUse = Truck.k_MaxLitersInFuelTruck;
+                        getCurrEnergyLeft(o_TypeOfEnergy, o_MaxEnergyToUse, out o_CurrEnergyLeft);
                         getTires(o_NumOfWheels, o_MaxPSI, out o_Tires);
-                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel,i_CurrEnergyLeft,o_MaxEnergyToUse);
+                        o_EnergySourseSystem = new FuelSystem((eFuelType)o_TypeOfFuel, o_CurrEnergyLeft, o_MaxEnergyToUse);
                         break;
                     }
             }
@@ -378,14 +562,14 @@ Tires PSI: {5}",
         {
             Console.WriteLine(
 @"Please insert vehicle's color:
-{0}.Black
-{1}.Red
-{2}.Silver
-{3}.White",
-            (int)eCarColors.Black,
+{0}.Red
+{1}.White
+{2}.Black
+{3}.Silver",
             (int)eCarColors.Red,
-            (int)eCarColors.Silver,
-            (int)eCarColors.White);
+            (int)eCarColors.White,
+            (int)eCarColors.Black,
+            (int)eCarColors.Silver);
             o_CarColor = (eCarColors)GetValidInputs.GetValidInputNumber(1, Car.k_NumOfColorsOptions);
         }
 
@@ -408,9 +592,9 @@ Tires PSI: {5}",
 
         private void getTires(int i_NumOfTires,float i_MaxPSI, out Tire[] o_Tires)
         {
-            Console.Write("Please enter the tires manufacturer");
+            Console.WriteLine("Please enter the tires manufacturer");
             string tireManufacturer = GetValidInputs.GetValidTireManufacturer();
-            Console.Write("Please enter the tires current PSI");
+            Console.WriteLine("Please enter the tires current PSI");
             float currentPSI = GetValidInputs.GetValidPSI();
 
             o_Tires = new Tire[i_NumOfTires];
@@ -453,7 +637,7 @@ Tires PSI: {5}",
             o_LicenseType = (eLicenseTypes)GetValidInputs.GetValidInputNumber(1, Motorcycle.k_NumOfLicenseTypesOptions);
         }
 
-        private void getCurrEnergyLeft(eTypeOfEnergy i_TypeOfEnergy, out float o_CurrEnergyLeft)
+        private void getCurrEnergyLeft(eTypeOfEnergy i_TypeOfEnergy,float i_MaxEnergyPossible, out float o_CurrEnergyLeft)
         {
             string leftEnergyInStr;
             switch (i_TypeOfEnergy)
@@ -471,9 +655,9 @@ Tires PSI: {5}",
             }
 
             leftEnergyInStr = Console.ReadLine(); 
-            while (!(float.TryParse(leftEnergyInStr, out o_CurrEnergyLeft)) || o_CurrEnergyLeft < 0)
+            while (!(float.TryParse(leftEnergyInStr, out o_CurrEnergyLeft)) || o_CurrEnergyLeft < 0 || o_CurrEnergyLeft > i_MaxEnergyPossible)
             {
-                Console.WriteLine("You must enter only possitive numbers!");
+                Console.WriteLine("You must enter only possitive numbers that are smaller than {0}!",i_MaxEnergyPossible);
                 leftEnergyInStr = Console.ReadLine();
             }
         }
