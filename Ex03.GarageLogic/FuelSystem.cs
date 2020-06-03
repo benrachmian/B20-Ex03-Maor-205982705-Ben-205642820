@@ -11,21 +11,22 @@ namespace Ex03.GarageLogic
         Octan98 = 1,
         Octan96,
         Octan95,
-        Diesel
+        Soler
     }
 
     public class FuelSystem : EnergySourceSystem
     {
         public const int k_NumOfFuelTypes = 4;
-        private readonly eFuelType m_FuelType;
+        private eFuelType m_FuelType;
         private float m_CurrFuelInLiters;
         private float m_MaxFuelInLiters;
 
-        public FuelSystem(eFuelType i_FuelType, float i_CurrFuelInLiters, float i_MaxFuelInLiters)
+       
+        public FuelSystem(float i_MaxFuelInLiters , eFuelType i_FuelType)
         {
-            m_FuelType = i_FuelType;
-            m_CurrFuelInLiters = i_CurrFuelInLiters;
             m_MaxFuelInLiters = i_MaxFuelInLiters;
+            m_FuelType = i_FuelType;
+            m_CurrFuelInLiters = 0;
         }
 
         // public properties
@@ -34,6 +35,10 @@ namespace Ex03.GarageLogic
             get
             {
                 return m_FuelType;
+            }
+            set
+            {
+                m_FuelType = value;
             }
         }
 
@@ -46,6 +51,17 @@ namespace Ex03.GarageLogic
             set
             {
                 m_CurrFuelInLiters = value;
+            }
+        }
+        public float MaxFuelInLiters
+        {
+            get
+            {
+                return m_MaxFuelInLiters;
+            }
+            set
+            {
+                m_MaxFuelInLiters = value;
             }
         }
 
@@ -81,6 +97,13 @@ namespace Ex03.GarageLogic
             {
                 //THROW EXEPTION DIFFERENT TYPE
             }
+        }
+
+        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        {
+            i_VehiclesParameters.Add(eVehiclesParameters.FuelType);
+            i_VehiclesParameters.Add(eVehiclesParameters.CurrFuelInLiters);
+            i_VehiclesParameters.Add(eVehiclesParameters.MaxFuelInLiters);
         }
     }
 }

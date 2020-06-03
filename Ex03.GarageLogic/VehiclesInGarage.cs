@@ -29,7 +29,7 @@ namespace Ex03.GarageLogic
             m_VehicleStatus = eVehicleStatuses.InRepair;
             m_VehicleInfo = i_VehicleInfo;
         }
-
+        //public properies
         public Vehicle VehicleInfo
         {
             get
@@ -55,6 +55,14 @@ namespace Ex03.GarageLogic
             get
             {
                 return m_OwnerName;
+            }
+        }
+
+        public string OwnersPhoneNumber
+        {
+            get
+            {
+                return m_OwnerPhoneNumber;
             }
         }
     }

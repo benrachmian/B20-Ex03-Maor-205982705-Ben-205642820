@@ -29,18 +29,17 @@ namespace Ex03.ConsoleUI
             bool parseSuccessed;
 
             inputStr = Console.ReadLine();
-            parseSuccessed = int.TryParse(inputStr, out inputNum);
-            while (!parseSuccessed || !isInNumberRange(i_MinRange, i_MaxRange, inputNum))
+            //parseSuccessed = int.TryParse(inputStr, out inputNum);
+            inputNum = int.Parse(inputStr);
+            while (/*!parseSuccessed ||*/ !isInNumberRange(i_MinRange, i_MaxRange, inputNum))
             {
-                if (!parseSuccessed)
-                {
-                    Console.WriteLine("You must enter digits only! Try again!");
-                }
-
+                //if (!parseSuccessed)
+                //{
+                //    Console.WriteLine("You must enter digits only! Try again!");
+                //}
                 inputStr = Console.ReadLine();
                 parseSuccessed = int.TryParse(inputStr, out inputNum);
             }
-
             return inputNum;
         }
 
@@ -94,7 +93,8 @@ namespace Ex03.ConsoleUI
 
             if (!isValid)
             {
-                Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
+                throw new ValueOutOfRangeException(i_MaxRange, i_MinRange);
+                //Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
             }
 
             return isValid;
@@ -112,9 +112,9 @@ namespace Ex03.ConsoleUI
             return isValid;
         }
 
-        public static string GetValidTireManufacturer()
+        public static string GetValidTireManufacturer(int i_MinLenght, int i_MaxLenght)
         {
-            return GetValidStringOnlyLetters("tire manufacturer",Tire.k_MinCharsForTireManufacturerName,Tire.k_MaxCharsForTireManufacturerName);
+            return GetValidStringOnlyLetters(i_MinLenght, i_MaxLenght);
         }
 
         public static string GetValidPhoneNumber()
@@ -159,7 +159,7 @@ namespace Ex03.ConsoleUI
             return inputString;
         }
 
-        public static string GetValidStringOnlyLetters(string i_TargetName, int i_MinRange, int i_MaxRange)
+        public static string GetValidStringOnlyLetters(int i_MinRange, int i_MaxRange)
         {
             string inputString;
             bool isValid = false;
@@ -169,11 +169,11 @@ namespace Ex03.ConsoleUI
                 inputString = Console.ReadLine();
                 if (inputString.Length < i_MinRange || inputString.Length > i_MaxRange)
                 {
-                    Console.WriteLine("A {0} name must be at least {1} and maximum {2} characters. Please try again!", i_TargetName, i_MinRange, i_MaxRange);
+                    Console.WriteLine("The name must be at least {0} and maximum {1} characters. Please try again!", i_MinRange, i_MaxRange);
                 }
                 else if (!doesContainOnlyLetters(inputString))
                 {
-                    Console.WriteLine("A {0} name must contain only letters.Please try again!", i_TargetName);
+                    Console.WriteLine("The name must contain only letters.Please try again!");
                 }
                 else
                 {
@@ -214,17 +214,21 @@ namespace Ex03.ConsoleUI
             return isOnlyLetters;
         }
 
-        public static float GetValidPSI() /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+        public static float GetValidPSI(float i_MaxPSIPossible) /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
         {
             // string PsiInput;
             float validPSI;
-
-            while (!float.TryParse(Console.ReadLine(), out validPSI))
+            bool parseSuccessed = !float.TryParse(Console.ReadLine(), out validPSI);
+            while (!parseSuccessed || isInNumberRange(0, i_MaxPSIPossible, validPSI))
             {
-
+                if (!parseSuccessed)
+                {
+                    Console.WriteLine("You must enter only numbers!");
+                }
+                parseSuccessed = !float.TryParse(Console.ReadLine(), out validPSI);
             }
 
-            return 5;
+            return validPSI;
         }
 
         public static string GetValidModel()

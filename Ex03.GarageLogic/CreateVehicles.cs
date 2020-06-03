@@ -16,19 +16,60 @@ namespace Ex03.GarageLogic
     }
     public class CreateVehicles
     {
-        public static Vehicle CreateMotorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
+        public static Vehicle CreateVehicle(eTypeOfVehicle i_TypeOfVehicle, string i_LicenseNumber)
         {
-            return new Motorcycle(i_Model, i_LicenseNumber, i_Tires, i_EnerySourceSystem, i_LicenseType, i_EngineVolume); 
-        }
-
-        public static Vehicle CreateCar (string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, eCarColors i_CarColor, uint i_NumOfDoors)
-        {
-            return new Car(i_Model, i_LicenseNumber, i_Tires, i_EnergySourceSystem, i_CarColor, i_NumOfDoors);
-        }
-
-        public static Vehicle CreateTruck(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, bool i_IsCarryingDangerousMaterials, float i_TrunkVolume)
-        {
-            return new Truck(i_Model, i_LicenseNumber, i_Tires, i_EnergySourceSystem, i_IsCarryingDangerousMaterials, i_TrunkVolume);
+            switch (i_TypeOfVehicle)
+            {
+                case eTypeOfVehicle.ElectricCar:
+                    {
+                        Tire[] electricCarTires = new Tire[4];
+                        foreach (Tire tire in electricCarTires)
+                        {
+                            new Tire(Car.k_MaxPsiInElectricCar);
+                        }
+                        return new Car(i_LicenseNumber, new BatterySystem(Car.k_MaxBatteryHoursInElectricCar), electricCarTires);
+                    }
+                case eTypeOfVehicle.ElectricMotorcycle:
+                    {
+                        Tire[] electricMotorocycleTires = new Tire[2];
+                        foreach (Tire tire in electricMotorocycleTires)
+                        {
+                            new Tire(Motorcycle.k_MaxPsiInElectricMotorcycle);
+                        }
+                        return new Motorcycle(i_LicenseNumber, new BatterySystem(Motorcycle.k_MaxBatteryHoursInElectricMotorcycle), electricMotorocycleTires);
+                    }
+                case eTypeOfVehicle.RegularCar:
+                    {
+                        Tire[] regularCarTires = new Tire[4];
+                        for(int i=0;i<4;i++)
+                        {
+                            regularCarTires[i] = new Tire(Car.k_MaxPsiInFuelCar);
+                        }
+                        //foreach(Tire tire in regularCarTires)
+                        //{
+                        //    new Tire(Car.k_MaxPsiInFuelCar);
+                        //}
+                        return new Car(i_LicenseNumber, new FuelSystem(Car.k_MaxLitersInFuelCar, eFuelType.Octan96), regularCarTires);
+                    }
+                case eTypeOfVehicle.RegularMotorcycle:
+                    {
+                        Tire[] RegularMotorcycleTires = new Tire[2];
+                        foreach (Tire tire in RegularMotorcycleTires)
+                        {
+                            new Tire(Motorcycle.k_MaxPsiInRegularMotorcycle);
+                        }
+                        return new Motorcycle(i_LicenseNumber, new FuelSystem(Motorcycle.k_MaxLitersInFuelMotorcycle, eFuelType.Octan95), RegularMotorcycleTires);
+                    }
+                default: //eTypeOfVehicle.Truck:
+                    {
+                        Tire[] TruckTires = new Tire[16];
+                        foreach (Tire tire in TruckTires)
+                        {
+                            new Tire(Truck.k_MaxPsiInTruck);
+                        }
+                        return new Truck(i_LicenseNumber, new FuelSystem(Truck.k_MaxLitersInFuelTruck, eFuelType.Soler), TruckTires);
+                    }
+            }
         }
     }
 }

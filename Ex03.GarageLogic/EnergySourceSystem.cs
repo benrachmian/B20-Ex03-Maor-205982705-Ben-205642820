@@ -17,5 +17,6 @@ namespace Ex03.GarageLogic
         public abstract void ProvideSourceEnergy(float i_HoursToAdd);
         public abstract float GetEnergyLeftInPrecents();
         public abstract float GetMaxEnergyPossible();
+        public abstract void GetParams(List<eVehiclesParameters> i_VehiclesParameters);
     }
 }

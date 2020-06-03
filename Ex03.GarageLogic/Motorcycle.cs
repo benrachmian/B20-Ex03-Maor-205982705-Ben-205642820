@@ -21,25 +21,31 @@ namespace Ex03.GarageLogic
         public const int k_MaxPsiInElectricMotorcycle = 30;
         public const int k_MaxPsiInRegularMotorcycle = 30;
         public const float k_MaxLitersInFuelMotorcycle = 7f;
-        public const float k_MaxHoursInElectricMotorcycle = 1.2f;
+        public const float k_MaxBatteryHoursInElectricMotorcycle = 1.2f;
         public const int k_MinEngineVolume = 50;
         public const int k_MaxEngineVolume = 1200;
-        private eLicenseTypes m_LicenseType;
-        private readonly int m_EngineVolume;
+        private eLicenseTypes? m_LicenseType;
+        private int m_EngineVolume;
 
-        public Motorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
-            : base(i_Model,i_LicenseNumber,i_Tires,i_EnerySourceSystem)
+        public Motorcycle(string i_LicenseNumber, EnergySourceSystem i_EnergySourceSystem, Tire[] i_Tires) 
+            : base(i_LicenseNumber, i_EnergySourceSystem, i_Tires)
         {
-            m_LicenseType = i_LicenseType;
-            m_EngineVolume = i_EngineVolume;
+            m_LicenseType = null;
+            m_EngineVolume = 0;
         }
+        //    public Motorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
+        //    : base(i_Model,i_LicenseNumber,i_Tires,i_EnerySourceSystem)
+        //{
+        //    m_LicenseType = i_LicenseType;
+        //    m_EngineVolume = i_EngineVolume;
+        //}
 
         //public properties
         public eLicenseTypes LicenseType
         {
             get
             {
-                return m_LicenseType;
+                return (eLicenseTypes)m_LicenseType;
             }
             set
             {
@@ -53,11 +59,22 @@ namespace Ex03.GarageLogic
             {
                 return m_EngineVolume;
             }
+            set
+            {
+                m_EngineVolume = value;
+            }
         }
 
-        public override string GetModelName()
+        //public override string GetModelName()
+        //{
+        //    return m_Model;
+        //}
+
+        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
         {
-            return m_Model;
+            base.GetParams(i_VehiclesParameters);
+            i_VehiclesParameters.Add(eVehiclesParameters.LicenseType);
+            i_VehiclesParameters.Add(eVehiclesParameters.EngineVolume);
         }
     }
 }
