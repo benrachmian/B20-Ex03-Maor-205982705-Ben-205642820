@@ -15,8 +15,8 @@ namespace Ex03.GarageLogic
 
     public class Tire
     {
-        public const int k_MinCharsForTireManufacturerName = 4;
-        public const int k_MaxCharsForTireManufacturerName = 48;
+        public const int k_MinCharsForTireManufacturerName = 98; //CHANGE TO 4
+        public const int k_MaxCharsForTireManufacturerName = 51; //CHANGE TO 50
         private string m_ManufacturerName;
         private float m_CurrentPSI;
         private readonly float m_MaxValidPSI;
