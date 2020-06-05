@@ -33,7 +33,7 @@ namespace Ex03.GarageLogic
         private eLicenseTypes? m_LicenseType;
         private int m_EngineVolume;
 
-        public Motorcycle(string i_LicenseNumber, EnergySourceSystem i_EnergySourceSystem, Tire[] i_Tires) 
+        public Motorcycle(string i_LicenseNumber, EnergySourceSystem i_EnergySourceSystem, Tire[] i_Tires)
             : base(i_LicenseNumber, i_EnergySourceSystem, i_Tires)
         {
             m_LicenseType = null;
@@ -51,10 +51,7 @@ namespace Ex03.GarageLogic
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> motorcycleParams = new Dictionary<int, string>();
-            //if(m_EnergySourceSystem is FuelSystem)
-            //{
-                motorcycleParams.Add((int)eMotorcycleParams.EngineVolume, "Engine volume: ");
-            //}
+            motorcycleParams.Add((int)eMotorcycleParams.EngineVolume, "Engine volume: ");
             motorcycleParams.Add((int)eMotorcycleParams.LicenseType, string.Format
                 ("License type: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eLicenseTypes.A, eLicenseTypes.A1, eLicenseTypes.AA, eLicenseTypes.B));
 
@@ -77,7 +74,6 @@ namespace Ex03.GarageLogic
                     }
             }
         }
-        
 
         //public properties
         public eLicenseTypes LicenseType
@@ -116,7 +112,5 @@ Engine volume: {1}",
 
             return motorcycleToString.ToString();
         }
-
-
     }
 }

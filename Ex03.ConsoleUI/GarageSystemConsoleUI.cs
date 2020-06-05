@@ -162,69 +162,88 @@ Fuel type:{1}",
         public void Recharge()
         {
             string licenseNumber;
+            bool isValid;
             float hoursAmountToAdd, maxAmount;
             VehiclesInGarage vehicleToCharge;
 
             getLicenseNumber(out licenseNumber);
-            try
+            do
             {
-                vehicleToCharge = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
-                if(vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem is BatterySystem)
+                isValid = true;
+                try
                 {
-                    maxAmount = vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
-                    Console.WriteLine("Please insert how many hours of battery you would like to charge:");
-                    hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
-                    m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, hoursAmountToAdd);
+                    vehicleToCharge = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
+                    if (vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem is BatterySystem)
+                    {
+                        maxAmount = vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
+                        Console.WriteLine(
+@"You can recharge up to {0} hours.
+Please insert how many time you would like to recharge:",
+                        (maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
+                        hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
+                        m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, hoursAmountToAdd, null);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You tried to charge an elctric vehicle with fuel!");
+                        isValid = false;
+                    }
                 }
-                else
+                catch (ArgumentException e)
                 {
-                    Console.WriteLine("You tried to charge an elctric vehicle with fuel!");
+                    Console.WriteLine(e.Message);
+                    isValid = false;
                 }
-            }
-            catch
-            {
-            }
-            Console.WriteLine("----------------Returning to menu----------------");
+            } while (!isValid);
+
+            Console.WriteLine("You recharge successfully!{0}----------------Returning to menu----------------", Environment.NewLine);
         }
 
         public void Refuel()
         {
             string licenseNumber;
-            eFuelType fuelType;
             float fuelAmountToAdd, maxAmount;
+            bool isValid;
+            eFuelType fuelType;
             VehiclesInGarage vehicleToRefuel;
-
-            try
+            do
             {
-                getLicenseNumber(out licenseNumber);
-                vehicleToRefuel = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
-                if (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem is FuelSystem)
+                isValid = true;
+                try
                 {
+                    getLicenseNumber(out licenseNumber);
+                    vehicleToRefuel = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
+                    if (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem is FuelSystem)
+                    {
 
-                    fuelType = getFuelType();
-                    maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
-                    Console.WriteLine(
+                        fuelType = getFuelType();
+                        maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
+                        Console.WriteLine(
 @"You can refuel up to {0} liters.
 Please insert how many liters of fuel you would like to refuel:",
-                    (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
-                    fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
-                    m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber,fuelAmountToAdd,null);
-                    m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
+                        (maxAmount - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
+                        fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount); // do we need to change to LeftMax amount?
+                        m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
+                    }
+                    else
+                    {
+                        Console.WriteLine("You tried to fuel an fuel vehicle with electricity!");
+                        isValid = false;
+                    }
                 }
-            }
-            catch(ArgumentNullException)
-            {
-                Console.WriteLine("SNDJASDASDASDD");
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            //else
-            //{
-            //    //throw excpetion
-            //}
-            Console.WriteLine("----------------Returning to menu----------------");
+                //catch (ArgumentNullException)
+                //{
+                //    Console.WriteLine("SNDJASDASDASDD");
+                //    isValid = false;
+                //}
+                catch (ArgumentException e)
+                {
+                    Console.WriteLine(e.Message);
+                    isValid = false;
+                }
+            } while (!isValid);
+
+            Console.WriteLine("You refuel successfully!{0}----------------Returning to menu----------------", Environment.NewLine);
         }
 
         public void InflateTires()

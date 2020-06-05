@@ -61,17 +61,6 @@ namespace Ex03.GarageLogic
                 return "Fuel System";
             }
         }
-        //public float MaxFuelInLiters
-        //{
-        //    get
-        //    {
-        //        return m_MaxFuelInLiters;
-        //    }
-        //    set
-        //    {
-        //        m_MaxFuelInLiters = value;
-        //    }
-        //}
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
@@ -95,18 +84,24 @@ namespace Ex03.GarageLogic
         {
             if (i_FuelType == m_FuelType)
             {
-                if (m_MaxFuelInLiters - m_CurrFuelInLiters > i_FuelToAdd)
+                if (m_MaxFuelInLiters - m_CurrFuelInLiters >= i_FuelToAdd)
                 {
                     m_CurrFuelInLiters += i_FuelToAdd;
                 }
                 else
                 {
-                    throw new ArgumentException("You tried to refuel with too much fuel!");
+                    throw new ValueOutOfRangeException(m_MaxFuelInLiters - m_CurrFuelInLiters, 0, eOutOfRangeTypes.Number);
+                    //throw new ArgumentException("You tried to refuel with too much fuel!");
                 }
             }
             else
             {
-                throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
+                throw new ArgumentException(
+                            string.Format(
+@"You tried to refuel with different type fuel of that vehicle!
+The vehicle type fuel is: {0}",
+                            m_FuelType));
+              //  throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
             }
         }
 
@@ -118,12 +113,5 @@ Fuel gauge: {1} liters",
             m_FuelType,
             m_CurrFuelInLiters);
         }
-
-        //public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
-        //{
-        //    i_VehiclesParameters.Add(eVehiclesParameters.FuelType);
-        //    i_VehiclesParameters.Add(eVehiclesParameters.CurrFuelInLiters);
-        //    i_VehiclesParameters.Add(eVehiclesParameters.MaxFuelInLiters);
-        //}
     }
 }

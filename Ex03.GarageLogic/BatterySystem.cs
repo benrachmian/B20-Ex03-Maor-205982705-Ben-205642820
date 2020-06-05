@@ -52,7 +52,7 @@ namespace Ex03.GarageLogic
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
-            if(m_MaxBatteryTime - m_BatteryTimeRemaining > i_HoursToAdd)
+            if(m_MaxBatteryTime - m_BatteryTimeRemaining >= i_HoursToAdd)
             {
                 m_BatteryTimeRemaining += i_HoursToAdd;
             }

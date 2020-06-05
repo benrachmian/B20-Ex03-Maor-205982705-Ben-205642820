@@ -96,51 +96,51 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ProvideSourceEnergyToVehicle(string i_VehicleLicenseNumber, float i_FuelToAdd, eFuelType i_FuelType)
+        public void ProvideSourceEnergyToVehicle(string i_VehicleLicenseNumber, float i_AmountToAdd, eFuelType? i_FuelType)
         {
             VehiclesInGarage vehicleToUpdate;
-            FuelSystem sourceEnergyTypeSystem;
+            FuelSystem fuelSourceEnergyTypeSystem;
+            BatterySystem batterySourceEnergyTypeSystem;
 
             if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
             {
-                if(i_FuelType != null)
+                if (i_FuelType != null)
                 {
-                        sourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as FuelSystem;
-                        if (sourceEnergyTypeSystem != null)
+                    fuelSourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as FuelSystem;
+                    if (fuelSourceEnergyTypeSystem != null)
+                    {
+                        if (fuelSourceEnergyTypeSystem.FuelType == i_FuelType)
                         {
-                             if (sourceEnergyTypeSystem.FuelType == i_FuelType)
-                             {
-                        //vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem.
-                                    sourceEnergyTypeSystem.ProvideSourceEnergy(i_FuelToAdd, i_FuelType);
-                                    vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
-                       // vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = sourceEnergyTypeSystem.CurrEnergy / sourceEnergyTypeSystem.MaxEnergyPossible;
-                             }
-                             else
-                             {
-                                   throw new ArgumentException(
-                                   string.Format("You tried to refuel with different type fuel of that vehicle!{0}The vehicle type fuel is: {1}",
-                                   Environment.NewLine,
-                                   sourceEnergyTypeSystem.FuelType));  
-
-                             }
+                            fuelSourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd, (eFuelType)i_FuelType);
+                            vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
                         }
                         else
                         {
-                            throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
+                            throw new ArgumentException(
+                            string.Format(
+@"You tried to refuel with different type fuel of that vehicle!
+The vehicle type fuel is: {0}",
+                            fuelSourceEnergyTypeSystem.FuelType));
+
                         }
+                    }
+                    else
+                    {
+                        throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
+                    }
                 }
                 else
                 {
-                        sourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-                        if (sourceEnergyTypeSystem != null)
-                        {
-                            sourceEnergyTypeSystem.ProvideSourceEnergy(i_HoursToAdd);
-                            vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = sourceEnergyTypeSystem.CurrEnergy / sourceEnergyTypeSystem.MaxEnergyPossible;
-                        }
-                         else
-                         {
-                             throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
-                         }
+                    batterySourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
+                    if (batterySourceEnergyTypeSystem != null)
+                    {
+                        batterySourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd);
+                        vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = batterySourceEnergyTypeSystem.CurrEnergy / batterySourceEnergyTypeSystem.MaxEnergyPossible;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
+                    }
                 }
             }
             else
@@ -149,30 +149,30 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public void ProvideSourceEnergyToVehicle(string i_VehicleLicenseNumber, float i_HoursToAdd)
-        {
-            VehiclesInGarage VehicleToUpdate;
-            FuelSystem sourceEnergyTypeSystem;
+        //public void ProvideSourceEnergyToVehicle(string i_VehicleLicenseNumber, float i_HoursToAdd)
+        //{
+        //    VehiclesInGarage vehicleToUpdate;
+        //    FuelSystem sourceEnergyTypeSystem;
 
 
-            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out VehicleToUpdate))
-            {
-                sourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-                if (sourceEnergyTypeSystem != null)
-                {
-                    sourceEnergyTypeSystem.ProvideSourceEnergy(i_HoursToAdd);
-                    vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = sourceEnergyTypeSystem.CurrEnergy / sourceEnergyTypeSystem.MaxEnergyPossible;
-                }
-                else
-                {
-                    throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
-                }
-            }
-            else
-            {
-                throw new KeyNotFoundException("There is no such vehicle in the system!");
-            }
-        }
+        //    if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
+        //    {
+        //        sourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
+        //        if (sourceEnergyTypeSystem != null)
+        //        {
+        //            sourceEnergyTypeSystem.ProvideSourceEnergy(i_HoursToAdd);
+        //            vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
+        //        }
+        //        else
+        //        {
+        //            throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        throw new KeyNotFoundException("There is no such vehicle in the system!");
+        //    }
+        //}
 
         public void FindEnergySystemType(EnergySourceSystem i_VehicleToCheckEnergySourseSystem, out FuelSystem o_VehicleFuelSystem, out BatterySystem o_VehicleBatterySystem)
         {
