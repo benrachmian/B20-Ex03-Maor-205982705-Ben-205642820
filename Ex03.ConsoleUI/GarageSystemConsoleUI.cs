@@ -166,21 +166,22 @@ Fuel type:{1}",
             float hoursAmountToAdd, maxAmount;
             VehiclesInGarage vehicleToCharge;
 
-            getLicenseNumber(out licenseNumber);
             do
             {
                 isValid = true;
                 try
                 {
+                    getLicenseNumber(out licenseNumber);
                     vehicleToCharge = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
                     if (vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem is BatterySystem)
                     {
                         maxAmount = vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
+                        float maxPossibleHoursToCharge = maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
                         Console.WriteLine(
 @"You can recharge up to {0} hours.
 Please insert how many time you would like to recharge:",
-                        (maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
-                        hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
+                        maxPossibleHoursToCharge);
+                        hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleHoursToCharge);
                         m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, hoursAmountToAdd, null);
                     }
                     else
@@ -189,9 +190,14 @@ Please insert how many time you would like to recharge:",
                         isValid = false;
                     }
                 }
-                catch (ArgumentException e)
+                catch (ValueOutOfRangeException i_ValueOutOfRangeException)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(i_ValueOutOfRangeException.Message);
+                    isValid = false;
+                }
+                catch (ArgumentException i_ArgumentException)
+                {
+                    Console.WriteLine(i_ArgumentException.Message);
                     isValid = false;
                 }
             } while (!isValid);
@@ -218,11 +224,12 @@ Please insert how many time you would like to recharge:",
 
                         fuelType = getFuelType();
                         maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
+                        float maxPossibleFuelToRefuel = maxAmount - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
                         Console.WriteLine(
-@"You can refuel up to {0} liters.
+@"You can refuel up to {0:0.0} liters.
 Please insert how many liters of fuel you would like to refuel:",
-                        (maxAmount - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
-                        fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount); // do we need to change to LeftMax amount?
+                        maxPossibleFuelToRefuel);
+                        fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleFuelToRefuel); // do we need to change to LeftMax amount?
                         m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
                     }
                     else
@@ -231,14 +238,14 @@ Please insert how many liters of fuel you would like to refuel:",
                         isValid = false;
                     }
                 }
-                //catch (ArgumentNullException)
-                //{
-                //    Console.WriteLine("SNDJASDASDASDD");
-                //    isValid = false;
-                //}
-                catch (ArgumentException e)
+                catch (ValueOutOfRangeException i_ValueOutOfRangeException)
                 {
-                    Console.WriteLine(e.Message);
+                    Console.WriteLine(i_ValueOutOfRangeException.Message);
+                    isValid = false;
+                }
+                catch (ArgumentException i_ArgumentException)
+                {
+                    Console.WriteLine(i_ArgumentException.Message);
                     isValid = false;
                 }
             } while (!isValid);
