@@ -80,7 +80,14 @@ namespace Ex03.GarageLogic
             {
                 foreach (Tire tire in VehicleToUpdate.VehicleInfo.Tires)
                 {
-                    tire.CurrentPSI = tire.MaxPSI;
+                    if(tire.CurrentPSI == tire.MaxPSI)
+                    {
+                        throw new ArgumentException("The tires PSI are already maximum!");
+                    }
+                    else
+                    {
+                        tire.CurrentPSI = tire.MaxPSI;
+                    }
                 }
             }
             else
@@ -101,8 +108,8 @@ namespace Ex03.GarageLogic
                 {
                     if (sourceEnergyTypeSystem.FuelType == i_FuelType)
                     {
-
                         vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem.ProvideSourceEnergy(i_FuelToAdd, i_FuelType);
+                        vehicleToUpdate.VehicleInfo.
                     }
                     else
                     {

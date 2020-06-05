@@ -25,6 +25,7 @@ namespace Ex03.GarageLogic
             get;
             set;
         }
+        public abstract string EnergyType { get; }
         public abstract override string ToString();
 
         //public abstract Dictionary<int, string> GetParams();

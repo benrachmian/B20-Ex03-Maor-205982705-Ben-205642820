@@ -53,6 +53,14 @@ namespace Ex03.GarageLogic
                 m_CurrFuelInLiters = value;
             }
         }
+
+        public override string EnergyType
+        {
+            get
+            {
+                return "Fuel System";
+            }
+        }
         //public float MaxFuelInLiters
         //{
         //    get
@@ -87,18 +95,18 @@ namespace Ex03.GarageLogic
         {
             if (i_FuelType == m_FuelType)
             {
-                if (m_MaxFuelInLiters - m_CurrFuelInLiters <= i_FuelToAdd)
+                if (m_MaxFuelInLiters - m_CurrFuelInLiters > i_FuelToAdd)
                 {
                     m_CurrFuelInLiters += i_FuelToAdd;
                 }
                 else
                 {
-                    //THRWO EXPECTION TOO MUCH FUEL
+                    throw new ArgumentException("You tried to refuel with too much fuel!");
                 }
             }
             else
             {
-                //THROW EXEPTION DIFFERENT TYPE
+                throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
             }
         }
 

@@ -66,6 +66,13 @@ namespace Ex03.GarageLogic
                 m_NumOfDoors = value;
             }
         }
+        public override string VehilceType
+        {
+            get
+            {
+                return "Car";
+            }
+        }
 
         public override Dictionary<int, string> GetParams()
         {

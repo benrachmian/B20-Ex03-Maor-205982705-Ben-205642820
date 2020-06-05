@@ -72,7 +72,7 @@ namespace Ex03.GarageLogic
             toString.Append(string.Format(
 @"-----------Details-----------
 Vehicle owner's name: {0}
-Vehicle owner's phone number:{1}
+Vehicle owner's phone number :{1}
 Vehicle status in garage: {2}",
                       m_OwnerName,
                       m_OwnerPhoneNumber,

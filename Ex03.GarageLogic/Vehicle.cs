@@ -87,13 +87,14 @@ namespace Ex03.GarageLogic
                 m_EnergyLeftInPrecents = value;
             }
         }
+        public abstract string VehilceType { get; }
 
         public Dictionary<int, string> GetVehicleParams()
         {
             Dictionary<int, string> vehicleParams = new Dictionary<int, string>();
 
             vehicleParams.Add((int)eVehiclesParameters.Model, "vehicle's model:");
-            vehicleParams.Add((int)eVehiclesParameters.ManufacturerName, "Manufacturer name:");
+            vehicleParams.Add((int)eVehiclesParameters.ManufacturerName, "Tire's manufacturer name:");
             vehicleParams.Add((int)eVehiclesParameters.CurrentPSI, "Current PSI:");
             vehicleParams.Add((int)eVehiclesParameters.CurrentEnergyLeft, "Current Energy Left:");
 
@@ -140,16 +141,22 @@ namespace Ex03.GarageLogic
         }
 
         public abstract Dictionary<int, string> GetParams();
+
         public abstract void SetSpecificTypeParams(int i_indexInEnum, string i_value);
+
         public override string ToString()
         {
             StringBuilder vehicleToString = new StringBuilder();
             vehicleToString.Append(string.Format(
-@"License number: {0}
-Model name: {1}
-Tires manufacturer name: {2}
-Tires PSI: {3}
+@"Vehicle's type: {0}
+Energy system type: {1}
+License number: {2}
+Model name: {3}
+Tires manufacturer name: {4}
+Tires PSI: {5}
 ",
+                this.VehilceType,
+                m_EnergySourceSystem.EnergyType,
                 m_LicenseNumber,
                 m_Model,
                 m_Tires[0].ManufacturerName,
@@ -159,16 +166,10 @@ Tires PSI: {3}
 
             return vehicleToString.ToString();
         }
+
+        public void UpdateEnergyLeftInPrecents()
+        {
+            m_EnergyLeftInPrecents = m_EnergySourceSystem.CurrEnergy / m_EnergySourceSystem.MaxEnergyPossible;
+        }
     }
 }
-//public virtual void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
-//{
-//    i_VehiclesParameters.Add(eVehiclesParameters.LicenseNumber);
-//    i_VehiclesParameters.Add(eVehiclesParameters.Model);
-//    i_VehiclesParameters.Add(eVehiclesParameters.EnergyLeftInPrecents);
-//    i_VehiclesParameters.Add(eVehiclesParameters.EnergySourceSystem);
-//    i_VehiclesParameters.Add(eVehiclesParameters.Tires);
-//    i_VehiclesParameters.Add(eVehiclesParameters.ManufacturerName);
-//    i_VehiclesParameters.Add(eVehiclesParameters.CurrentPSI);
-//    i_VehiclesParameters.Add(eVehiclesParameters.MaxValidPSI);
-//}

@@ -37,6 +37,14 @@ namespace Ex03.GarageLogic
 
         //public properties
 
+        public override string VehilceType
+        {
+            get
+            {
+                return "Truck";
+            }
+        }
+
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> truckParams = new Dictionary<int, string>();

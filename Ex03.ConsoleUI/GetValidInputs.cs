@@ -29,14 +29,13 @@ namespace Ex03.ConsoleUI
             bool parseSuccessed;
 
             inputStr = Console.ReadLine();
-            //parseSuccessed = int.TryParse(inputStr, out inputNum);
-            inputNum = int.Parse(inputStr);
-            while (/*!parseSuccessed ||*/ !isInNumberRange(i_MinRange, i_MaxRange, inputNum))
+            parseSuccessed = int.TryParse(inputStr, out inputNum);
+            while (!parseSuccessed || !isInNumberRange(i_MinRange, i_MaxRange, inputNum))
             {
-                //if (!parseSuccessed)
-                //{
-                //    Console.WriteLine("You must enter digits only! Try again!");
-                //}
+                if (!parseSuccessed)
+                {
+                    Console.WriteLine("You must enter digits only! Try again!");
+                }
                 inputStr = Console.ReadLine();
                 parseSuccessed = int.TryParse(inputStr, out inputNum);
             }
