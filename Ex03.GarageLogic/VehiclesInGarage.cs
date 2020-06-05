@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
     public class VehiclesInGarage
     {
         public const int k_MinCharactersForOwnersName = 3;
-        public const int k_MaxCharactersForOwnersName = 45;
+        public const int k_MaxCharactersForOwnersName = 50;
         private readonly string m_OwnerName;
         private readonly string m_OwnerPhoneNumber;
         private eVehicleStatuses m_VehicleStatus;
