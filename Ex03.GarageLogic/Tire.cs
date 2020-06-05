@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    //public enum eTireParameters
+    //{
+    //    ManufacturerName,
+    //    CurrentPSI,
+    //    MaxValidPSI
+    //}
+
     public class Tire
     {
         public const int k_MinCharsForTireManufacturerName = 4;
@@ -58,7 +65,7 @@ namespace Ex03.GarageLogic
         {
             if(m_MaxValidPSI - m_CurrentPSI < i_AmountOfPsiToAdd)
             {
-                throw new ValueOutOfRangeException(m_MaxValidPSI - m_CurrentPSI, 0);
+                throw new ValueOutOfRangeException(m_MaxValidPSI - m_CurrentPSI, 0, eOutOfRangeTypes.Number);
             }
             else
             {

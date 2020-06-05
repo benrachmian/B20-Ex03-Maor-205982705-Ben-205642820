@@ -18,14 +18,14 @@ namespace Ex03.GarageLogic
         }
 
         // public properties
-        public float MaxBatteryTime
+        public override float MaxEnergyPossible
         {
             get
             {
                 return m_MaxBatteryTime;
             }
         }
-        public float BatteryTimeRemaining
+        public override float CurrEnergy
         {
             get
             {
@@ -36,7 +36,6 @@ namespace Ex03.GarageLogic
                 m_BatteryTimeRemaining = value;
             }
         }
-
 
         public override void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType)
         {
@@ -51,7 +50,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw new ValueOutOfRangeException(m_MaxBatteryTime - m_BatteryTimeRemaining, 0);
+                throw new ValueOutOfRangeException(m_MaxBatteryTime - m_BatteryTimeRemaining, 0, eOutOfRangeTypes.Number);
             }
         }
 
@@ -60,15 +59,20 @@ namespace Ex03.GarageLogic
             return (m_BatteryTimeRemaining / m_MaxBatteryTime) * 100;
         }
 
-        public override float GetMaxEnergyPossible()
+        public override string ToString()
         {
-            return m_MaxBatteryTime;
+            return string.Format("Battery gauge: {0} hours", m_BatteryTimeRemaining);
         }
 
-        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
-        {
-            i_VehiclesParameters.Add(eVehiclesParameters.BatteryTimeRemaining);
-            i_VehiclesParameters.Add(eVehiclesParameters.MaxBatteryTime);
-        }
+        //public override float GetMaxEnergyPossible()
+        //{
+        //    return m_MaxBatteryTime;
+        //}
+
+        //public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        //{
+        //    i_VehiclesParameters.Add(eVehiclesParameters.BatteryTimeRemaining);
+        //    i_VehiclesParameters.Add(eVehiclesParameters.MaxBatteryTime);
+        //}
     }
 }

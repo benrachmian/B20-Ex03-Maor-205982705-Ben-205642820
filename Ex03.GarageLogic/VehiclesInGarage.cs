@@ -65,6 +65,21 @@ namespace Ex03.GarageLogic
                 return m_OwnerPhoneNumber;
             }
         }
+
+        public override string ToString()
+        {
+            StringBuilder toString = new StringBuilder();
+            toString.Append(string.Format(
+@"-----------Details-----------
+Vehicle owner's name: {0}
+Vehicle owner's phone number:{1}
+Vehicle status in garage: {2}",
+                      m_OwnerName,
+                      m_OwnerPhoneNumber,
+                      m_VehicleStatus));
+
+            return toString.ToString();
+        }
     }
 
 

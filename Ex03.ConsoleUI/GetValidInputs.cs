@@ -87,18 +87,18 @@ namespace Ex03.ConsoleUI
             return inputNum;
         }
 
-        private static bool isInNumberRange(int i_MinRange, int i_MaxRange, int i_Input)
-        {
-            bool isValid = i_Input >= i_MinRange && i_Input <= i_MaxRange;
+        //private static bool isInNumberRange(int i_MinRange, int i_MaxRange, int i_Input)
+        //{
+        //    bool isValid = i_Input >= i_MinRange && i_Input <= i_MaxRange;
 
-            if (!isValid)
-            {
-                throw new ValueOutOfRangeException(i_MaxRange, i_MinRange);
-                //Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
-            }
+        //    if (!isValid)
+        //    {
+        //        throw new ValueOutOfRangeException(i_MaxRange, i_MinRange);
+        //        //Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
+        //    }
 
-            return isValid;
-        }
+        //    return isValid;
+        //}
 
         private static bool isInNumberRange(float i_MinRange, float i_MaxRange, float i_Input)
         {
@@ -158,6 +158,7 @@ namespace Ex03.ConsoleUI
 
             return inputString;
         }
+
 
         public static string GetValidStringOnlyLetters(int i_MinRange, int i_MaxRange)
         {
@@ -231,10 +232,10 @@ namespace Ex03.ConsoleUI
             return validPSI;
         }
 
-        public static string GetValidModel()
-        {
-            return GetValidString("model",Vehicle.k_MinModelCharacters,Vehicle.k_MaxModelCharacters);
-        }
+        //public static string GetValidModel()
+        //{
+        //    return GetValidString("model",Vehicle.k_MinModelCharacters,Vehicle.k_MaxModelCharacters);
+        //}
 
         public static string GetValidLicenseNumber()
         {

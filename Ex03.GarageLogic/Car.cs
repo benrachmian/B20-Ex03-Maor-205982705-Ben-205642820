@@ -6,6 +6,13 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    public enum eCarParams
+    {
+        CarColor,
+        NumOfDoors
+    }
+    
+        
     public enum eCarColors
     {
         Red = 1,
@@ -25,11 +32,6 @@ namespace Ex03.GarageLogic
         public const float k_MaxLitersInFuelCar = 60;
         public const float k_MaxBatteryHoursInElectricCar = 2.1f;
 
-        //public override void getDetails(List<string> i_dataMembersName, List<object> i_DataMembers)
-        //{
-            
-        //}
-
         private eCarColors? m_CarColor;
         private uint m_NumOfDoors;
 
@@ -39,13 +41,7 @@ namespace Ex03.GarageLogic
             m_CarColor = null;
             m_NumOfDoors = 0;
         }
-        //public Car(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, eCarColors i_CarColor, uint i_NumOfDoors)
-        //    : base(i_Model,i_LicenseNumber,i_Tires, i_EnergySourceSystem) //c'tor
-        //{
-        //    m_CarColor = i_CarColor;
-        //    m_NumOfDoors = i_NumOfDoors;
-        //}
-
+        
         //public properties
         public eCarColors CarColor
         {
@@ -71,16 +67,45 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //public override string GetModelName()
-        //{
-        //    return m_Model;
-        //}
-
-        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        public override Dictionary<int, string> GetParams()
         {
-            base.GetParams(i_VehiclesParameters);
-            i_VehiclesParameters.Add(eVehiclesParameters.CarColor);
-            i_VehiclesParameters.Add(eVehiclesParameters.NumOfDoors);
+            Dictionary<int, string> carParams = new Dictionary<int, string>();
+
+            carParams.Add((int)eCarParams.CarColor, string.Format
+                ("Car color: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eCarColors.Red, eCarColors.White, eCarColors.Black, eCarColors.Silver));
+            carParams.Add((int)eCarParams.NumOfDoors, "Number of doors:");
+
+            return carParams;
+        }
+
+        public override void SetSpecificTypeParams(int i_indexInEnum, string i_value)
+        {
+            switch (i_indexInEnum)
+            {
+                case (int)eCarParams.NumOfDoors:
+                    {
+                        m_NumOfDoors = (uint)Validation.CheckNumberValidation(i_value, k_MinNumOfDoors, k_MaxNumOfDoors);
+                        break;
+                    }
+                case (int)eCarParams.CarColor:
+                    {
+                        m_CarColor = (eCarColors)Validation.CheckNumberValidation(i_value, 1, k_NumOfColorsOptions);
+                        break;
+                    }
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder carToString = new StringBuilder();
+            carToString.Append(base.ToString());
+            carToString.Append(string.Format(
+@"Car color: {0}
+Number of doors: {1}",
+                      m_CarColor,
+                      m_NumOfDoors));
+
+            return carToString.ToString();
         }
     }
 }

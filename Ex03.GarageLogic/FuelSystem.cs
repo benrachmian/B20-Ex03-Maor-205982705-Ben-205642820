@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
         public const int k_NumOfFuelTypes = 4;
         private eFuelType m_FuelType;
         private float m_CurrFuelInLiters;
-        private float m_MaxFuelInLiters;
+        private readonly float m_MaxFuelInLiters;
 
        
         public FuelSystem(float i_MaxFuelInLiters , eFuelType i_FuelType)
@@ -42,7 +42,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public float CurrFuelInLiters
+        public override float CurrEnergy
         {
             get
             {
@@ -53,26 +53,29 @@ namespace Ex03.GarageLogic
                 m_CurrFuelInLiters = value;
             }
         }
-        public float MaxFuelInLiters
-        {
-            get
-            {
-                return m_MaxFuelInLiters;
-            }
-            set
-            {
-                m_MaxFuelInLiters = value;
-            }
-        }
+        //public float MaxFuelInLiters
+        //{
+        //    get
+        //    {
+        //        return m_MaxFuelInLiters;
+        //    }
+        //    set
+        //    {
+        //        m_MaxFuelInLiters = value;
+        //    }
+        //}
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
             throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
         }
 
-        public override float GetMaxEnergyPossible()
+        public override float MaxEnergyPossible 
         {
-            return m_MaxFuelInLiters;
+            get
+            {
+                return m_MaxFuelInLiters;
+            }
         }
 
         public override float GetEnergyLeftInPrecents()
@@ -99,11 +102,20 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        public override string ToString()
         {
-            i_VehiclesParameters.Add(eVehiclesParameters.FuelType);
-            i_VehiclesParameters.Add(eVehiclesParameters.CurrFuelInLiters);
-            i_VehiclesParameters.Add(eVehiclesParameters.MaxFuelInLiters);
+            return string.Format(
+@"Fuel type: {0}
+Fuel gauge: {1} liters", 
+            m_FuelType,
+            m_CurrFuelInLiters);
         }
+
+        //public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        //{
+        //    i_VehiclesParameters.Add(eVehiclesParameters.FuelType);
+        //    i_VehiclesParameters.Add(eVehiclesParameters.CurrFuelInLiters);
+        //    i_VehiclesParameters.Add(eVehiclesParameters.MaxFuelInLiters);
+        //}
     }
 }

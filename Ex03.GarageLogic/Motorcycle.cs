@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
+    public enum eMotorcycleParams
+    {
+        LicenseType,
+        EngineVolume
+    }
+
     public enum eLicenseTypes
     {
         A = 1,
@@ -33,12 +39,35 @@ namespace Ex03.GarageLogic
             m_LicenseType = null;
             m_EngineVolume = 0;
         }
-        //    public Motorcycle(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnerySourceSystem, eLicenseTypes i_LicenseType, int i_EngineVolume)
-        //    : base(i_Model,i_LicenseNumber,i_Tires,i_EnerySourceSystem)
-        //{
-        //    m_LicenseType = i_LicenseType;
-        //    m_EngineVolume = i_EngineVolume;
-        //}
+
+        public override Dictionary<int, string> GetParams()
+        {
+            Dictionary<int, string> motorcycleParams = new Dictionary<int, string>();
+
+            motorcycleParams.Add((int)eMotorcycleParams.EngineVolume, "Engine volume: ");
+            motorcycleParams.Add((int)eMotorcycleParams.LicenseType, string.Format
+                ("License type: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eLicenseTypes.A, eLicenseTypes.A1, eLicenseTypes.AA, eLicenseTypes.B));
+
+            return motorcycleParams;
+        }
+
+        public override void SetSpecificTypeParams(int i_indexInEnum, string i_value)
+        {
+            switch (i_indexInEnum)
+            {
+                case (int)eMotorcycleParams.EngineVolume:
+                    {
+                        EngineVolume = Validation.CheckNumberValidation(i_value, k_MinEngineVolume, k_MaxEngineVolume);
+                        break;
+                    }
+                case (int)eMotorcycleParams.LicenseType:
+                    {
+                        LicenseType = (eLicenseTypes)Validation.CheckNumberValidation(i_value, 1, k_NumOfLicenseTypesOptions);
+                        break;
+                    }
+            }
+        }
+        
 
         //public properties
         public eLicenseTypes LicenseType
@@ -65,16 +94,19 @@ namespace Ex03.GarageLogic
             }
         }
 
-        //public override string GetModelName()
-        //{
-        //    return m_Model;
-        //}
-
-        public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
+        public override string ToString()
         {
-            base.GetParams(i_VehiclesParameters);
-            i_VehiclesParameters.Add(eVehiclesParameters.LicenseType);
-            i_VehiclesParameters.Add(eVehiclesParameters.EngineVolume);
+            StringBuilder motorcycleToString = new StringBuilder();
+            motorcycleToString.Append(base.ToString());
+            motorcycleToString.Append(string.Format(
+@"License type: {0}
+Engine volume: {1}",
+                      m_LicenseType,
+                      m_EngineVolume));
+
+            return motorcycleToString.ToString();
         }
+
+
     }
 }

@@ -175,16 +175,16 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public float GetMaxBatteryAmount(VehiclesInGarage i_vehicle) // maybe not need at all
-        {
-            BatterySystem batterySystem = i_vehicle.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-            if (batterySystem == null)
-            {
-                // throw exception
-            }
+        //public float GetMaxBatteryAmount(VehiclesInGarage i_vehicle) // maybe not need at all
+        //{
+        //    BatterySystem batterySystem = i_vehicle.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
+        //    if (batterySystem == null)
+        //    {
+        //        // throw exception
+        //    }
 
-            return batterySystem.MaxBatteryTime;
-        }
+        //    return batterySystem.MaxBatteryTime;
+        //}
 
 
     }
