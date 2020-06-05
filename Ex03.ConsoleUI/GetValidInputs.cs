@@ -125,7 +125,8 @@ namespace Ex03.ConsoleUI
             while(tempPhoneNumber.Length!=10 || tempPhoneNumber[0]!='0' || !int.TryParse(tempPhoneNumber, out phoneNumberInInt))
             {
                 Console.WriteLine(
-@"The phone number must contain exactly 10 digits that begin with '0'. No other characters are allowed! Please try again!");
+@"The phone number must contain exactly 10 digits that begin with '0'.
+No other characters are allowed! Please try again!");
                 tempPhoneNumber = Console.ReadLine();
             }
             phoneNumber.Append(tempPhoneNumber);
@@ -214,27 +215,23 @@ namespace Ex03.ConsoleUI
             return isOnlyLetters;
         }
 
-        public static float GetValidPSI(float i_MaxPSIPossible) /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+        /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
+        /*public static float getvalidpsi(float i_maxpsipossible) 
         {
-            // string PsiInput;
-            float validPSI;
-            bool parseSuccessed = !float.TryParse(Console.ReadLine(), out validPSI);
-            while (!parseSuccessed || isInNumberRange(0, i_MaxPSIPossible, validPSI))
+            float validpsi;
+            bool parsesuccessed = !float.tryparse(console.readline(), out validpsi);
+            while (!parsesuccessed || isinnumberrange(0, i_maxpsipossible, validpsi))
             {
-                if (!parseSuccessed)
+                if (!parsesuccessed)
                 {
-                    Console.WriteLine("You must enter only numbers!");
+                    console.writeline("you must enter only numbers!");
                 }
-                parseSuccessed = !float.TryParse(Console.ReadLine(), out validPSI);
+                parsesuccessed = !float.tryparse(console.readline(), out validpsi);
             }
 
-            return validPSI;
+            return validpsi;
         }
-
-        //public static string GetValidModel()
-        //{
-        //    return GetValidString("model",Vehicle.k_MinModelCharacters,Vehicle.k_MaxModelCharacters);
-        //}
+        */
 
         public static string GetValidLicenseNumber()
         {

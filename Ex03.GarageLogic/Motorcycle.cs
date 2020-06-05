@@ -51,10 +51,10 @@ namespace Ex03.GarageLogic
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> motorcycleParams = new Dictionary<int, string>();
-            if(m_EnergySourceSystem is FuelSystem)
-            {
+            //if(m_EnergySourceSystem is FuelSystem)
+            //{
                 motorcycleParams.Add((int)eMotorcycleParams.EngineVolume, "Engine volume: ");
-            }
+            //}
             motorcycleParams.Add((int)eMotorcycleParams.LicenseType, string.Format
                 ("License type: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eLicenseTypes.A, eLicenseTypes.A1, eLicenseTypes.AA, eLicenseTypes.B));
 

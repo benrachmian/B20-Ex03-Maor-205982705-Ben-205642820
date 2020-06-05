@@ -165,7 +165,6 @@ Fuel type:{1}",
             float hoursAmountToAdd, maxAmount;
             VehiclesInGarage vehicleToCharge;
 
-            Console.WriteLine("Insert vehicle's license number:");
             getLicenseNumber(out licenseNumber);
             try
             {
@@ -195,7 +194,6 @@ Fuel type:{1}",
             float fuelAmountToAdd, maxAmount;
             VehiclesInGarage vehicleToRefuel;
 
-            Console.WriteLine("Insert vehicle's license number:");
             try
             {
                 getLicenseNumber(out licenseNumber);
@@ -210,6 +208,7 @@ Fuel type:{1}",
 Please insert how many liters of fuel you would like to refuel:",
                     (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy));
                     fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxAmount);
+                    m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber,fuelAmountToAdd,null);
                     m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
                 }
             }
@@ -455,3 +454,4 @@ Please insert how many liters of fuel you would like to refuel:",
         
     }
 }
+
