@@ -163,7 +163,7 @@ Fuel type:{1}",
         {
             string licenseNumber;
             bool isValid;
-            float hoursAmountToAdd, maxAmount;
+            float hoursAmountToAdd, maxAmount, maxPossibleHoursToCharge;
             VehiclesInGarage vehicleToCharge;
 
             do
@@ -176,9 +176,9 @@ Fuel type:{1}",
                     if (vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem is BatterySystem)
                     {
                         maxAmount = vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
-                        float maxPossibleHoursToCharge = maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
+                        maxPossibleHoursToCharge = maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
                         Console.WriteLine(
-@"You can recharge up to {0} hours.
+@"You can recharge up to {0:0.0} hours.
 Please insert how many time you would like to recharge:",
                         maxPossibleHoursToCharge);
                         hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleHoursToCharge);
@@ -476,8 +476,6 @@ Please insert how many liters of fuel you would like to refuel:",
             Console.WriteLine("Please insert the vehicle's license number:");
             o_LicenseNumber = GetValidInputs.GetValidLicenseNumber();
         }
-
-        
     }
 }
 
