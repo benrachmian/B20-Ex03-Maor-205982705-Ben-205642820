@@ -101,51 +101,57 @@ namespace Ex03.GarageLogic
             VehiclesInGarage vehicleToUpdate;
             FuelSystem fuelSourceEnergyTypeSystem;
             BatterySystem batterySourceEnergyTypeSystem;
-
-            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
+            if (i_AmountToAdd <= 0)
             {
-                if (i_FuelType != null)
+                throw new ArgumentException("You must provide energy with possitive number!");
+            }
+            else
+            {
+                if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
                 {
-                    fuelSourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as FuelSystem;
-                    if (fuelSourceEnergyTypeSystem != null)
+                    if (i_FuelType != null)
                     {
-                        if (fuelSourceEnergyTypeSystem.FuelType == i_FuelType)
+                        fuelSourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as FuelSystem;
+                        if (fuelSourceEnergyTypeSystem != null)
                         {
-                            fuelSourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd, (eFuelType)i_FuelType);
-                            vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
+                            if (fuelSourceEnergyTypeSystem.FuelType == i_FuelType)
+                            {
+                                fuelSourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd, (eFuelType)i_FuelType);
+                                vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
+                            }
+                            else
+                            {
+                                throw new ArgumentException(
+                                string.Format(
+    @"You tried to refuel with different type fuel of that vehicle!
+The vehicle type fuel is: {0}",
+                                fuelSourceEnergyTypeSystem.FuelType));
+
+                            }
                         }
                         else
                         {
-                            throw new ArgumentException(
-                            string.Format(
-@"You tried to refuel with different type fuel of that vehicle!
-The vehicle type fuel is: {0}",
-                            fuelSourceEnergyTypeSystem.FuelType));
-
+                            throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
                         }
                     }
                     else
                     {
-                        throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
+                        batterySourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
+                        if (batterySourceEnergyTypeSystem != null)
+                        {
+                            batterySourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd);
+                            vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = batterySourceEnergyTypeSystem.CurrEnergy / batterySourceEnergyTypeSystem.MaxEnergyPossible;
+                        }
+                        else
+                        {
+                            throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
+                        }
                     }
                 }
                 else
                 {
-                    batterySourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-                    if (batterySourceEnergyTypeSystem != null)
-                    {
-                        batterySourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd);
-                        vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = batterySourceEnergyTypeSystem.CurrEnergy / batterySourceEnergyTypeSystem.MaxEnergyPossible;
-                    }
-                    else
-                    {
-                        throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
-                    }
+                    throw new KeyNotFoundException("There is no such vehicle in the system!");
                 }
-            }
-            else
-            {
-                throw new KeyNotFoundException("There is no such vehicle in the system!");
             }
         }
 

@@ -91,7 +91,7 @@ Welcome to the garage system!");
                 {
                     Console.WriteLine(exception.Message);
                     Console.WriteLine("----------------Returning to menu----------------");
-                    System.Threading.Thread.Sleep(1000);
+                    //System.Threading.Thread.Sleep(1000);
                 }
             } while (option != k_ExitOption);
         }
@@ -186,7 +186,7 @@ Please insert how many time you would like to recharge:",
                     }
                     else
                     {
-                        Console.WriteLine("You tried to charge an elctric vehicle with fuel!");
+                        Console.WriteLine("You tried to refuel a fuel vehicle with electricity");
                         isValid = false;
                     }
                 }
@@ -221,7 +221,6 @@ Please insert how many time you would like to recharge:",
                     vehicleToRefuel = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
                     if (vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem is FuelSystem)
                     {
-
                         fuelType = getFuelType();
                         maxAmount = vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
                         float maxPossibleFuelToRefuel = maxAmount - vehicleToRefuel.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
@@ -229,12 +228,12 @@ Please insert how many time you would like to recharge:",
 @"You can refuel up to {0:0.0} liters.
 Please insert how many liters of fuel you would like to refuel:",
                         maxPossibleFuelToRefuel);
-                        fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleFuelToRefuel); // do we need to change to LeftMax amount?
+                        fuelAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleFuelToRefuel);
                         m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, fuelAmountToAdd, fuelType);
                     }
                     else
                     {
-                        Console.WriteLine("You tried to fuel an fuel vehicle with electricity!");
+                        Console.WriteLine("You tried to charge an elctric vehicle with fuel!");
                         isValid = false;
                     }
                 }
@@ -261,7 +260,7 @@ Please insert how many liters of fuel you would like to refuel:",
             m_GarageSystem.InflateTiresToMax(licenseNumber);
             Console.WriteLine("The tires were inflated successfully!");
             Console.WriteLine("----------------Returning to menu----------------");
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
         }
 
         public void ChangeVehicleStatus()
@@ -288,7 +287,7 @@ Please insert how many liters of fuel you would like to refuel:",
                 Console.WriteLine(exception.Message);
             }
             Console.WriteLine("----------------Returning to menu----------------");
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
         }
 
         public void PresentVehicleLicenseNumberInGarageToConsole()
@@ -314,9 +313,9 @@ Please insert how many liters of fuel you would like to refuel:",
             {
                 Console.WriteLine("There are no vehicles in that status right now!");
             }
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
             Console.WriteLine("---------------Returning to menu-----------------");
-            System.Threading.Thread.Sleep(500);
+            //System.Threading.Thread.Sleep(500);
         }
 
         public void AddNewVehicleToGarage()
@@ -328,9 +327,9 @@ Please insert how many liters of fuel you would like to refuel:",
             VehiclesInGarage newVehicle = new VehiclesInGarage(ownersName, ownersPhoneNumber, vehicleToAdd);
             m_GarageSystem.AddNewVehicleToGarage(newVehicle);
             Console.WriteLine("----------------Adding new vehicle to the system----------------");
-            System.Threading.Thread.Sleep(2000);
+            //System.Threading.Thread.Sleep(2000);
             Console.WriteLine("----------------The vehicle was added successfully!-------------");
-            System.Threading.Thread.Sleep(1000);
+            //System.Threading.Thread.Sleep(1000);
             Console.Clear();
         }
 
@@ -446,7 +445,7 @@ Please insert how many liters of fuel you would like to refuel:",
 {0}.Octan98
 {1}.Octan96
 {2}.Octan95
-{3}.Diesel",
+{3}.Soler",
             (int)eFuelType.Octan98,
             (int)eFuelType.Octan96,
             (int)eFuelType.Octan95,
