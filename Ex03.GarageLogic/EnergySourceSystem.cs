@@ -6,19 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public enum eTypeOfEnergy
-    {
-        Fuel,
-        Electic
-    }
-
     public abstract class EnergySourceSystem
     {
         public abstract void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType);
 
         public abstract void ProvideSourceEnergy(float i_HoursToAdd);
-
-        public abstract float GetEnergyLeftInPrecents();
 
         public abstract float MaxEnergyPossible
         {

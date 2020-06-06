@@ -72,17 +72,17 @@ namespace Ex03.GarageLogic
 
         public void ChangeVehicleStatus(string i_VehicleLicenseNumber, eVehicleStatuses i_UpdatedStatus)
         {
-            VehiclesInGarage VehicleToUpdate;
+            VehiclesInGarage vehicleToUpdate;
 
-            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out VehicleToUpdate))
+            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
             {
-                if (VehicleToUpdate.VehicleStatus == i_UpdatedStatus)
+                if (vehicleToUpdate.VehicleStatus == i_UpdatedStatus)
                 {
                     throw new ArgumentException("The vehicle is already in that status!");
                 }
                 else
                 {
-                    VehicleToUpdate.VehicleStatus = i_UpdatedStatus;
+                    vehicleToUpdate.VehicleStatus = i_UpdatedStatus;
                 }
             }
             else
@@ -93,11 +93,11 @@ namespace Ex03.GarageLogic
 
         public void InflateTiresToMax(string i_VehicleLicenseNumber)
         {
-            VehiclesInGarage VehicleToUpdate;
+            VehiclesInGarage vehicleToUpdate;
 
-            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out VehicleToUpdate))
+            if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
             {
-                foreach (Tire tire in VehicleToUpdate.VehicleInfo.Tires)
+                foreach (Tire tire in vehicleToUpdate.VehicleInfo.Tires)
                 {
                     if(tire.CurrentPSI == tire.MaxPSI)
                     {

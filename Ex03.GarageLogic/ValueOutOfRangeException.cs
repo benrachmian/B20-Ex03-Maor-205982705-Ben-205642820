@@ -21,9 +21,9 @@ namespace Ex03.GarageLogic
         public ValueOutOfRangeException(
             float i_MaxValue,
             float i_MinValue,
-            eOutOfRangeTypes iOutOfRangeType)
+            eOutOfRangeTypes i_OutOfRangeType) : base()
         {
-            switch (iOutOfRangeType)
+            switch (i_OutOfRangeType)
             {
                 case eOutOfRangeTypes.Number:
                     {

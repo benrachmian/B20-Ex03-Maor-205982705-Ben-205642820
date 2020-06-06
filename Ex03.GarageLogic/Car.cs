@@ -91,19 +91,19 @@ namespace Ex03.GarageLogic
             return carParams;
         }
 
-        public override void SetSpecificTypeParams(int i_indexInEnum, string i_value)
+        public override void SetSpecificTypeParams(int i_IndexInEnum, string i_Value)
         {
-            switch (i_indexInEnum)
+            switch (i_IndexInEnum)
             {
                 case (int)eCarParams.NumOfDoors:
                     {
-                        m_NumOfDoors = (uint)Validation.CheckNumberValidation(i_value, k_MinNumOfDoors, k_MaxNumOfDoors);
+                        m_NumOfDoors = (uint)Validation.CheckNumberValidation(i_Value, k_MinNumOfDoors, k_MaxNumOfDoors);
                         break;
                     }
 
                 case (int)eCarParams.CarColor:
                     {
-                        m_CarColor = (eCarColors)Validation.CheckNumberValidation(i_value, 1, k_NumOfColorsOptions);
+                        m_CarColor = (eCarColors)Validation.CheckNumberValidation(i_Value, 1, k_NumOfColorsOptions);
                         break;
                     }
             }
@@ -112,6 +112,7 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder carToString = new StringBuilder();
+
             carToString.Append(base.ToString());
             carToString.Append(string.Format(
 @"Car color: {0}

@@ -23,7 +23,7 @@ namespace Ex03.GarageLogic
         public const int k_MaxLicenseNumber = 8;
         public const int k_MinModelCharacters = 3;
         public const int k_MaxModelCharacters = 10;
-        protected readonly string m_LicenseNumber;
+        protected readonly string r_LicenseNumber;
         protected string m_Model;
         protected float m_EnergyLeftInPrecents;
         protected Tire[] m_Tires;
@@ -31,7 +31,7 @@ namespace Ex03.GarageLogic
 
         public Vehicle(string i_LicenseNumber, EnergySourceSystem i_EnergySourceSystem, Tire[] i_Tires)
         {
-            m_LicenseNumber = i_LicenseNumber;
+            r_LicenseNumber = i_LicenseNumber;
             m_Tires = i_Tires;
             m_EnergySourceSystem = i_EnergySourceSystem;
             m_Model = null;
@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_LicenseNumber;
+                return r_LicenseNumber;
             }
         }
 
@@ -167,7 +167,7 @@ Tires PSI: {5}
 ",
                 this.VehilceType,
                 m_EnergySourceSystem.EnergyType,
-                m_LicenseNumber,
+                r_LicenseNumber,
                 m_Model,
                 m_Tires[0].ManufacturerName,
                 m_Tires[0].CurrentPSI));

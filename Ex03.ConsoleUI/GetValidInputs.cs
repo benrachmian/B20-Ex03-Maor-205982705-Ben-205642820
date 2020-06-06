@@ -148,21 +148,6 @@ No other characters are allowed! Please try again!");
             return isOnlyLetters;
         }
 
-        private static bool doesContainOnlyLettersAndNumbers(string i_Str)
-        {
-            bool isOnlyLetters = true;
-
-            foreach (char c in i_Str)
-            {
-                if (!(c >= 'A' && c <= 'Z') && !(c >= 'a' && c <= 'z') && !(c >= '0' && c <= '9'))
-                {
-                    isOnlyLetters = false;
-                }
-            }
-
-            return isOnlyLetters;
-        }
-
         public static string GetValidLicenseNumber()
         {
             return GetValidLengthString(Vehicle.k_MinLicenseNumber, Vehicle.k_MaxLicenseNumber);

@@ -8,12 +8,12 @@ namespace Ex03.GarageLogic
 {
     public class BatterySystem : EnergySourceSystem
     {
-        private readonly float m_MaxBatteryTime;
+        private readonly float r_MaxBatteryTime;
         private float m_BatteryTimeRemaining;
 
         public BatterySystem(float i_MaxBatteryTime) // c'tor
         {
-            m_MaxBatteryTime = i_MaxBatteryTime;
+            r_MaxBatteryTime = i_MaxBatteryTime;
             m_BatteryTimeRemaining = 0;
         }
 
@@ -22,7 +22,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_MaxBatteryTime;
+                return r_MaxBatteryTime;
             }
         }
 
@@ -54,19 +54,14 @@ namespace Ex03.GarageLogic
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
-            if(m_MaxBatteryTime - m_BatteryTimeRemaining >= i_HoursToAdd)
+            if(r_MaxBatteryTime - m_BatteryTimeRemaining >= i_HoursToAdd)
             {
                 m_BatteryTimeRemaining += i_HoursToAdd;
             }
             else
             {
-                throw new ValueOutOfRangeException(m_MaxBatteryTime - m_BatteryTimeRemaining, 0, eOutOfRangeTypes.Number);
+                throw new ValueOutOfRangeException(r_MaxBatteryTime - m_BatteryTimeRemaining, 0, eOutOfRangeTypes.Number);
             }
-        }
-
-        public override float GetEnergyLeftInPrecents()
-        {
-            return (m_BatteryTimeRemaining / m_MaxBatteryTime) * 100;
         }
 
         public override string ToString()

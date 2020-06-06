@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     public class Tire
     {
-        private readonly float m_MaxValidPSI;
+        private readonly float r_MaxValidPSI;
         public const int k_MinCharsForTireManufacturerName = 4;
         public const int k_MaxCharsForTireManufacturerName = 50;
         private string m_ManufacturerName;
@@ -16,7 +16,7 @@ namespace Ex03.GarageLogic
 
         public Tire(float i_MaxValidPSI) // c'tor
         {
-            m_MaxValidPSI = i_MaxValidPSI;
+            r_MaxValidPSI = i_MaxValidPSI;
             m_ManufacturerName = null;
             m_CurrentPSI = 0;
         }
@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_MaxValidPSI;
+                return r_MaxValidPSI;
             }
         }
 
@@ -58,9 +58,9 @@ namespace Ex03.GarageLogic
 
         public void InflateTire(float i_AmountOfPsiToAdd)
         {
-            if(m_MaxValidPSI - m_CurrentPSI < i_AmountOfPsiToAdd)
+            if(r_MaxValidPSI - m_CurrentPSI < i_AmountOfPsiToAdd)
             {
-                throw new ValueOutOfRangeException(m_MaxValidPSI - m_CurrentPSI, 0, eOutOfRangeTypes.Number);
+                throw new ValueOutOfRangeException(r_MaxValidPSI - m_CurrentPSI, 0, eOutOfRangeTypes.Number);
             }
             else
             {

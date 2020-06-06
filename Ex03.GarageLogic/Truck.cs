@@ -29,7 +29,6 @@ namespace Ex03.GarageLogic
             m_TrunkVolume = 0;
         }
 
-        // public properties
         public override string VehilceType
         {
             get
@@ -79,6 +78,7 @@ namespace Ex03.GarageLogic
             }
         }
 
+        // public properties
         public bool IsCarryingDangerousMaterials
         {
             get

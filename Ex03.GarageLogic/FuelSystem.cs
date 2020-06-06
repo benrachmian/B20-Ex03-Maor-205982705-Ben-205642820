@@ -16,14 +16,14 @@ namespace Ex03.GarageLogic
 
     public class FuelSystem : EnergySourceSystem
     {
-        private readonly float m_MaxFuelInLiters;
+        private readonly float r_MaxFuelInLiters;
         public const int k_NumOfFuelTypes = 4;
         private float m_CurrFuelInLiters;
         private eFuelType m_FuelType;
 
         public FuelSystem(float i_MaxFuelInLiters, eFuelType i_FuelType)
         {
-            m_MaxFuelInLiters = i_MaxFuelInLiters;
+            r_MaxFuelInLiters = i_MaxFuelInLiters;
             m_FuelType = i_FuelType;
             m_CurrFuelInLiters = 0;
         }
@@ -72,26 +72,21 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_MaxFuelInLiters;
+                return r_MaxFuelInLiters;
             }
-        }
-
-        public override float GetEnergyLeftInPrecents()
-        {
-            return (m_CurrFuelInLiters / m_MaxFuelInLiters) * 100;
         }
 
         public override void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType)
         {
             if (i_FuelType == m_FuelType)
             {
-                if (m_MaxFuelInLiters - m_CurrFuelInLiters >= i_FuelToAdd)
+                if (r_MaxFuelInLiters - m_CurrFuelInLiters >= i_FuelToAdd)
                 {
                     m_CurrFuelInLiters += i_FuelToAdd;
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(m_MaxFuelInLiters - m_CurrFuelInLiters, 0, eOutOfRangeTypes.Number);
+                    throw new ValueOutOfRangeException(r_MaxFuelInLiters - m_CurrFuelInLiters, 0, eOutOfRangeTypes.Number);
                 }
             }
             else

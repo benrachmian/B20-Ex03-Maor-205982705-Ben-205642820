@@ -112,6 +112,7 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder motorcycleToString = new StringBuilder();
+
             motorcycleToString.Append(base.ToString());
             motorcycleToString.Append(string.Format(
 @"License type: {0}

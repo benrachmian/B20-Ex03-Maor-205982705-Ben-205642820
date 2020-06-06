@@ -17,15 +17,15 @@ namespace Ex03.GarageLogic
     {
         public const int k_MinCharactersForOwnersName = 3;
         public const int k_MaxCharactersForOwnersName = 50;
-        private readonly string m_OwnerName;
-        private readonly string m_OwnerPhoneNumber;
+        private readonly string r_OwnerName;
+        private readonly string r_OwnerPhoneNumber;
         private eVehicleStatuses m_VehicleStatus;
         private Vehicle m_VehicleInfo;
 
         public VehiclesInGarage(string i_OwnerName, string i_OwnerPhoneNumber, Vehicle i_VehicleInfo)
         {
-            m_OwnerName = i_OwnerName;
-            m_OwnerPhoneNumber = i_OwnerPhoneNumber;
+            r_OwnerName = i_OwnerName;
+            r_OwnerPhoneNumber = i_OwnerPhoneNumber;
             m_VehicleStatus = eVehicleStatuses.InRepair;
             m_VehicleInfo = i_VehicleInfo;
         }
@@ -56,7 +56,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_OwnerName;
+                return r_OwnerName;
             }
         }
 
@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_OwnerPhoneNumber;
+                return r_OwnerPhoneNumber;
             }
         }
 
@@ -77,8 +77,8 @@ namespace Ex03.GarageLogic
 Vehicle owner's name: {0}
 Vehicle owner's phone number: {1}
 Vehicle status in garage: {2}",
-                      m_OwnerName,
-                      m_OwnerPhoneNumber,
+                      r_OwnerName,
+                      r_OwnerPhoneNumber,
                       m_VehicleStatus));
 
             return toString.ToString();
