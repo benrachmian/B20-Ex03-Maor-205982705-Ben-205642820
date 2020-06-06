@@ -36,15 +36,16 @@ namespace Ex03.GarageLogic
             return foundVehicle;
         }
 
-        public bool IsIsGarage(string i_LicenseNumber)
+        public bool IsInGarageAndChangeToInRepairIfNecessary(string i_LicenseNumber)
         {
             bool inGarage = false;
 
-            foreach(string vehicleLicenseNumber in m_VehiclesInGarage.Keys)
+            foreach (KeyValuePair<string, VehiclesInGarage> vehicle in m_VehiclesInGarage)
             {
-                if(vehicleLicenseNumber == i_LicenseNumber)
+                if (vehicle.Key == i_LicenseNumber)
                 {
                     inGarage = true;
+                    vehicle.Value.VehicleStatus = eVehicleStatuses.InRepair;
                     break;
                 }
             }
@@ -59,7 +60,9 @@ namespace Ex03.GarageLogic
             if (m_VehiclesInGarage.TryGetValue(i_NewVehicleToGarage.VehicleInfo.LicenseNumber, out existVehicleInGarage))
             {
                 existVehicleInGarage.VehicleStatus = eVehicleStatuses.InRepair;
-                throw new Exception("The vehicle is already in the garage!");
+                throw new Exception(string.Format(
+                                                  "The vehicle is already in garage!{0}The vehicle status has changed to 'In repair'",
+                                                  Environment.NewLine));
             }
             else
             {
@@ -120,7 +123,7 @@ namespace Ex03.GarageLogic
 
             if (i_AmountToAdd <= 0)
             {
-                throw new ArgumentException("You must provide energy with possitive number!");
+                throw new ValueOutOfRangeException("You must provide energy with possitive number!");
             }
             else
             {
@@ -155,7 +158,7 @@ The vehicle type fuel is: {0}",
                         batterySourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
                         if (batterySourceEnergyTypeSystem != null)
                         {
-                            batterySourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd);
+                            batterySourceEnergyTypeSystem.ProvideSourceEnergy(i_AmountToAdd / 60);
                             vehicleToUpdate.VehicleInfo.EnergyLeftInPrecents = batterySourceEnergyTypeSystem.CurrEnergy / batterySourceEnergyTypeSystem.MaxEnergyPossible;
                         }
                         else

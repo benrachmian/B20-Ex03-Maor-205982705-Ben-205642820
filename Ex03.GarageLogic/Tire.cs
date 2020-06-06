@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         private string m_ManufacturerName;
         private float m_CurrentPSI;
 
-        public Tire (float i_MaxValidPSI) // c'tor
+        public Tire(float i_MaxValidPSI) // c'tor
         {
             m_MaxValidPSI = i_MaxValidPSI;
             m_ManufacturerName = null;

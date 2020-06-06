@@ -78,14 +78,14 @@ namespace Ex03.GarageLogic
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> carParams = new Dictionary<int, string>();
-
-            carParams.Add((int)eCarParams.CarColor, string.Format
-                                                                 ("Car color: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}",
-                                                                                            Environment.NewLine,
-                                                                                            eCarColors.Red,
-                                                                                            eCarColors.White,
-                                                                                            eCarColors.Black,
-                                                                                            eCarColors.Silver));
+            string msg = string.Format(
+                                       "Car color: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}",
+                                        Environment.NewLine,
+                                        eCarColors.Red,
+                                        eCarColors.White,
+                                        eCarColors.Black,
+                                        eCarColors.Silver);
+            carParams.Add((int)eCarParams.CarColor, msg);
             carParams.Add((int)eCarParams.NumOfDoors, "Number of doors:");
 
             return carParams;

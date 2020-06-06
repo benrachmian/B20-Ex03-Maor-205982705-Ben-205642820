@@ -7,7 +7,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    class GetValidInputs
+    internal class GetValidInputs
     {
         public static int GetValidInputNumber(int i_MinRange, int i_MaxRange)
         {
@@ -81,7 +81,7 @@ namespace Ex03.ConsoleUI
 
             if (!isValid)
             {
-                Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
+                Console.WriteLine("You must enter a number between {0} and {1:0.0}. Please try again!", i_MinRange, i_MaxRange);
             }
 
             return isValid;

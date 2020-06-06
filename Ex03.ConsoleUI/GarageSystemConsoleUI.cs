@@ -7,7 +7,7 @@ using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
-    class GarageSystemConsoleUI
+    public class GarageSystemConsoleUI
     {
         private const int k_NumTypesOfVehicles = 5;
         private const int k_ExitOption = 8;
@@ -25,7 +25,6 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(
 @"Hello!
 Welcome to the garage system!");
-
             do
             {
                 Console.WriteLine(
@@ -52,7 +51,7 @@ Welcome to the garage system!");
 
                         case 2:
                             {
-                                PresentVehicleLicenseNumberInGarageToConsole();
+                                PresentVehiclesInGarageLicenseNumbersToConsoleByStatus();
                                 break;
                             }
 
@@ -118,7 +117,7 @@ Welcome to the garage system!");
             }
             catch (KeyNotFoundException i_KeyNotFoundException)
             {
-                Console.WriteLine(i_KeyNotFoundException.Message.ToString());
+                Console.WriteLine(i_KeyNotFoundException.Message);
             }
 
             Console.WriteLine("----------------Returning to menu----------------");
@@ -128,7 +127,7 @@ Welcome to the garage system!");
         {
             string licenseNumber;
             bool isValid;
-            float hoursAmountToAdd, maxAmount, maxPossibleHoursToCharge;
+            float minutesAmountToAdd, maxAmount, maxPossibleMinutesToCharge;
             VehiclesInGarage vehicleToCharge;
 
             do
@@ -141,15 +140,15 @@ Welcome to the garage system!");
                     if (vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem is BatterySystem)
                     {
                         maxAmount = vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.MaxEnergyPossible;
-                        maxPossibleHoursToCharge = maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy;
-                        if (maxPossibleHoursToCharge != 0)
+                        maxPossibleMinutesToCharge = (maxAmount - vehicleToCharge.VehicleInfo.VehicleEnergySourceSystem.CurrEnergy) * 60;
+                        if (maxPossibleMinutesToCharge != 0)
                         {
                             Console.WriteLine(
-@"You can recharge up to {0:0.0} hours.
-Please insert how many time you would like to recharge:",
-                        maxPossibleHoursToCharge);
-                            hoursAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleHoursToCharge);
-                            m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, hoursAmountToAdd, null);
+@"You can recharge up to {0:0.0} minutes.
+Please insert how many minutes you would like to recharge:",
+                        maxPossibleMinutesToCharge);
+                            minutesAmountToAdd = GetValidInputs.GetValidInputNumber(0, maxPossibleMinutesToCharge);
+                            m_GarageSystem.ProvideSourceEnergyToVehicle(licenseNumber, minutesAmountToAdd, null);
                         }
                         else
                         {
@@ -271,7 +270,7 @@ Please insert how many liters of fuel you would like to refuel:",
             System.Threading.Thread.Sleep(1000);
         }
 
-        public void PresentVehicleLicenseNumberInGarageToConsole()
+        public void PresentVehiclesInGarageLicenseNumbersToConsoleByStatus()
         {
             int counter = 0, option;
 
@@ -341,9 +340,11 @@ Please insert how many liters of fuel you would like to refuel:",
 
             getVehiliceType(out typeOfVehicle);
             getLicenseNumber(out licenseNumber);
-            if (m_GarageSystem.IsIsGarage(licenseNumber))
+            if (m_GarageSystem.IsInGarageAndChangeToInRepairIfNecessary(licenseNumber))
             {
-                throw new Exception("The vehicle is already in garage!");
+                throw new Exception(string.Format(
+                                                  "The vehicle is already in garage!{0}The vehicle status has changed to 'In repair'",
+                                                  Environment.NewLine));
             }
 
             newVehicle = CreateVehicles.CreateVehicle(typeOfVehicle, licenseNumber);

@@ -41,9 +41,11 @@ namespace Ex03.GarageLogic
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> truckParams = new Dictionary<int, string>();
+            string msg = string.Format(
+                                       "Is carrying dangerous materials? {0}1. Yes {0}2. No",
+                                       Environment.NewLine);
 
-            truckParams.Add((int)eTruckParams.IsCarryingDangerousMaterials, string.Format
-                ("Is carrying dangerous materials? {0}1. Yes {0}2. No", Environment.NewLine));
+            truckParams.Add((int)eTruckParams.IsCarryingDangerousMaterials, msg);
             truckParams.Add((int)eTruckParams.TrunkVolume, "Trunk volume:");
 
             return truckParams;
