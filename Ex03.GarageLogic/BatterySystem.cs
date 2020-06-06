@@ -47,7 +47,7 @@ namespace Ex03.GarageLogic
 
         public override void ProvideSourceEnergy(float i_FuelToAdd, eFuelType i_FuelType)
         {
-            throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
+            throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
         }
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)

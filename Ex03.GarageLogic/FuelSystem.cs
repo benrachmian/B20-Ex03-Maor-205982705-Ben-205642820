@@ -64,7 +64,7 @@ namespace Ex03.GarageLogic
 
         public override void ProvideSourceEnergy(float i_HoursToAdd)
         {
-            throw new ArgumentException("You tried to charge an electric vehicle with fuel!");
+            throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
         }
 
         public override float MaxEnergyPossible 
@@ -91,7 +91,6 @@ namespace Ex03.GarageLogic
                 else
                 {
                     throw new ValueOutOfRangeException(m_MaxFuelInLiters - m_CurrFuelInLiters, 0, eOutOfRangeTypes.Number);
-                    //throw new ArgumentException("You tried to refuel with too much fuel!");
                 }
             }
             else
@@ -101,7 +100,6 @@ namespace Ex03.GarageLogic
 @"You tried to refuel with different type fuel of that vehicle!
 The vehicle type fuel is: {0}",
                             m_FuelType));
-              //  throw new ArgumentException("You tried to refuel a fuel vehicle with electricity!");
             }
         }
 
