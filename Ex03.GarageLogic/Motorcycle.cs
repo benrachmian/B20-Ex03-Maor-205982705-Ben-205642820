@@ -26,10 +26,10 @@ namespace Ex03.GarageLogic
         public const int k_NumOfWheelsInMotorcycle = 2;
         public const int k_MaxPsiInElectricMotorcycle = 30;
         public const int k_MaxPsiInRegularMotorcycle = 30;
-        public const float k_MaxLitersInFuelMotorcycle = 7f;
-        public const float k_MaxBatteryHoursInElectricMotorcycle = 1.2f;
         public const int k_MinEngineVolume = 50;
         public const int k_MaxEngineVolume = 1200;
+        public const float k_MaxLitersInFuelMotorcycle = 7f;
+        public const float k_MaxBatteryHoursInElectricMotorcycle = 1.2f;
         private eLicenseTypes? m_LicenseType;
         private int m_EngineVolume;
 
@@ -51,6 +51,7 @@ namespace Ex03.GarageLogic
         public override Dictionary<int, string> GetParams()
         {
             Dictionary<int, string> motorcycleParams = new Dictionary<int, string>();
+
             motorcycleParams.Add((int)eMotorcycleParams.EngineVolume, "Engine volume: ");
             motorcycleParams.Add((int)eMotorcycleParams.LicenseType, string.Format
                 ("License type: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eLicenseTypes.A, eLicenseTypes.A1, eLicenseTypes.AA, eLicenseTypes.B));
@@ -58,24 +59,25 @@ namespace Ex03.GarageLogic
             return motorcycleParams;
         }
 
-        public override void SetSpecificTypeParams(int i_indexInEnum, string i_value)
+        public override void SetSpecificTypeParams(int i_IndexInEnum, string i_Value)
         {
-            switch (i_indexInEnum)
+            switch (i_IndexInEnum)
             {
                 case (int)eMotorcycleParams.EngineVolume:
                     {
-                        EngineVolume = Validation.CheckNumberValidation(i_value, k_MinEngineVolume, k_MaxEngineVolume);
+                        EngineVolume = Validation.CheckNumberValidation(i_Value, k_MinEngineVolume, k_MaxEngineVolume);
                         break;
                     }
+
                 case (int)eMotorcycleParams.LicenseType:
                     {
-                        LicenseType = (eLicenseTypes)Validation.CheckNumberValidation(i_value, 1, k_NumOfLicenseTypesOptions);
+                        LicenseType = (eLicenseTypes)Validation.CheckNumberValidation(i_Value, 1, k_NumOfLicenseTypesOptions);
                         break;
                     }
             }
         }
 
-        //public properties
+        // public properties
         public eLicenseTypes LicenseType
         {
             get
@@ -94,6 +96,7 @@ namespace Ex03.GarageLogic
             {
                 return m_EngineVolume;
             }
+
             set
             {
                 m_EngineVolume = value;

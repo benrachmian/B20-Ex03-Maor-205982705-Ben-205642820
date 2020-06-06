@@ -29,7 +29,8 @@ namespace Ex03.GarageLogic
             m_VehicleStatus = eVehicleStatuses.InRepair;
             m_VehicleInfo = i_VehicleInfo;
         }
-        //public properies
+
+        // public properies
         public Vehicle VehicleInfo
         {
             get
@@ -44,6 +45,7 @@ namespace Ex03.GarageLogic
             {
                 return m_VehicleStatus;
             }
+
             set
             {
                 m_VehicleStatus = value;
@@ -69,10 +71,11 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder toString = new StringBuilder();
+
             toString.Append(string.Format(
 @"-----------Details-----------
 Vehicle owner's name: {0}
-Vehicle owner's phone number :{1}
+Vehicle owner's phone number: {1}
 Vehicle status in garage: {2}",
                       m_OwnerName,
                       m_OwnerPhoneNumber,
@@ -81,6 +84,4 @@ Vehicle status in garage: {2}",
             return toString.ToString();
         }
     }
-
-
 }

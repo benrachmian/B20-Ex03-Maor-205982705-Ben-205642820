@@ -14,6 +14,7 @@ namespace Ex03.GarageLogic
         ElectricCar,
         Truck
     }
+
     public class CreateVehicles
     {
         public static Vehicle CreateVehicle(eTypeOfVehicle i_TypeOfVehicle, string i_LicenseNumber)
@@ -23,7 +24,7 @@ namespace Ex03.GarageLogic
                 case eTypeOfVehicle.ElectricCar:
                     {
                         Tire[] electricCarTires = new Tire[4];
-                        
+
                         for (int i = 0; i < 4; i++)
                         {
                             electricCarTires[i] = new Tire(Car.k_MaxPsiInElectricCar);
@@ -31,6 +32,7 @@ namespace Ex03.GarageLogic
 
                         return new Car(i_LicenseNumber, new BatterySystem(Car.k_MaxBatteryHoursInElectricCar), electricCarTires);
                     }
+
                 case eTypeOfVehicle.ElectricMotorcycle:
                     {
                         Tire[] electricMotorocycleTires = new Tire[2];
@@ -38,9 +40,10 @@ namespace Ex03.GarageLogic
                         {
                             electricMotorocycleTires[i] = new Tire(Motorcycle.k_MaxPsiInElectricMotorcycle);
                         }
-                        
+
                         return new Motorcycle(i_LicenseNumber, new BatterySystem(Motorcycle.k_MaxBatteryHoursInElectricMotorcycle), electricMotorocycleTires);
                     }
+
                 case eTypeOfVehicle.RegularCar:
                     {
                         Tire[] regularCarTires = new Tire[4];
@@ -48,9 +51,10 @@ namespace Ex03.GarageLogic
                         {
                             regularCarTires[i] = new Tire(Car.k_MaxPsiInFuelCar);
                         }
-                        
+
                         return new Car(i_LicenseNumber, new FuelSystem(Car.k_MaxLitersInFuelCar, eFuelType.Octan96), regularCarTires);
                     }
+
                 case eTypeOfVehicle.RegularMotorcycle:
                     {
                         Tire[] RegularMotorcycleTires = new Tire[2];
@@ -62,7 +66,8 @@ namespace Ex03.GarageLogic
 
                         return new Motorcycle(i_LicenseNumber, new FuelSystem(Motorcycle.k_MaxLitersInFuelMotorcycle, eFuelType.Octan95), RegularMotorcycleTires);
                     }
-                default: //eTypeOfVehicle.Truck:
+
+                default: // eTypeOfVehicle.Truck:
                     {
                         Tire[] TruckTires = new Tire[16];
 

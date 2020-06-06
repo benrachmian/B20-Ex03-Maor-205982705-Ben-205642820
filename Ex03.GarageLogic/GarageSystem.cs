@@ -36,9 +36,10 @@ namespace Ex03.GarageLogic
             return foundVehicle;
         }
 
-        public bool isIsGarage(string i_LicenseNumber)
+        public bool IsIsGarage(string i_LicenseNumber)
         {
             bool inGarage = false;
+
             foreach(string vehicleLicenseNumber in m_VehiclesInGarage.Keys)
             {
                 if(vehicleLicenseNumber == i_LicenseNumber)
@@ -47,6 +48,7 @@ namespace Ex03.GarageLogic
                     break;
                 }
             }
+
             return inGarage;
         }
 
@@ -115,6 +117,7 @@ namespace Ex03.GarageLogic
             VehiclesInGarage vehicleToUpdate;
             FuelSystem fuelSourceEnergyTypeSystem;
             BatterySystem batterySourceEnergyTypeSystem;
+
             if (i_AmountToAdd <= 0)
             {
                 throw new ArgumentException("You must provide energy with possitive number!");
@@ -140,7 +143,6 @@ namespace Ex03.GarageLogic
     @"You tried to refuel with different type fuel of that vehicle!
 The vehicle type fuel is: {0}",
                                 fuelSourceEnergyTypeSystem.FuelType));
-
                             }
                         }
                         else
@@ -168,78 +170,5 @@ The vehicle type fuel is: {0}",
                 }
             }
         }
-
-        //public void ProvideSourceEnergyToVehicle(string i_VehicleLicenseNumber, float i_HoursToAdd)
-        //{
-        //    VehiclesInGarage vehicleToUpdate;
-        //    FuelSystem sourceEnergyTypeSystem;
-
-
-        //    if (m_VehiclesInGarage.TryGetValue(i_VehicleLicenseNumber, out vehicleToUpdate))
-        //    {
-        //        sourceEnergyTypeSystem = vehicleToUpdate.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-        //        if (sourceEnergyTypeSystem != null)
-        //        {
-        //            sourceEnergyTypeSystem.ProvideSourceEnergy(i_HoursToAdd);
-        //            vehicleToUpdate.VehicleInfo.UpdateEnergyLeftInPrecents();
-        //        }
-        //        else
-        //        {
-        //            throw new ArgumentException("You tried to charge an elctric vehicle with fuel!");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        throw new KeyNotFoundException("There is no such vehicle in the system!");
-        //    }
-        //}
-
-        public void FindEnergySystemType(EnergySourceSystem i_VehicleToCheckEnergySourseSystem, out FuelSystem o_VehicleFuelSystem, out BatterySystem o_VehicleBatterySystem)
-        {
-            o_VehicleFuelSystem = i_VehicleToCheckEnergySourseSystem as FuelSystem;
-            if (o_VehicleFuelSystem == null)
-            {
-                o_VehicleBatterySystem = i_VehicleToCheckEnergySourseSystem as BatterySystem;
-            }
-            else
-            {
-                o_VehicleBatterySystem = null;
-            }
-        }
-
-        public void FindVehicleType(Vehicle i_VehicleToCheck, out Car o_CarVehicle, out Motorcycle o_MotorcycleVehicle, out Truck o_TruckVehicle)
-        {
-            o_CarVehicle = i_VehicleToCheck as Car;
-            if (o_CarVehicle == null)
-            {
-                o_MotorcycleVehicle = i_VehicleToCheck as Motorcycle;
-                if (o_MotorcycleVehicle == null)
-                {
-                    o_TruckVehicle = i_VehicleToCheck as Truck;
-                }
-                else
-                {
-                    o_TruckVehicle = null;
-                }
-            }
-            else
-            {
-                o_MotorcycleVehicle = null;
-                o_TruckVehicle = null;
-            }
-        }
-
-        //public float GetMaxBatteryAmount(VehiclesInGarage i_vehicle) // maybe not need at all
-        //{
-        //    BatterySystem batterySystem = i_vehicle.VehicleInfo.VehicleEnergySourceSystem as BatterySystem;
-        //    if (batterySystem == null)
-        //    {
-        //        // throw exception
-        //    }
-
-        //    return batterySystem.MaxBatteryTime;
-        //}
-
-
     }
 }

@@ -30,17 +30,19 @@ namespace Ex03.GarageLogic
                         m_Msg = string.Format("You must enter a number between {0} - {1} , Please try again!", i_MinValue, i_MaxValue);
                         break;
                     }
+
                 case eOutOfRangeTypes.StringLength:
                     {
                         m_Msg = string.Format("You must minimum {0} chars and maximum {1} chars. Please try again!", i_MinValue, i_MaxValue);
                         break;
                     }
             }
+
             m_MaxValue = i_MaxValue;
             m_MinValue = i_MinValue;
         }
        
-        //public properties
+        // public properties
         public float MaxValue
         {
             get
@@ -56,6 +58,7 @@ namespace Ex03.GarageLogic
                 return m_MinValue;
             }
         }
+
         public override string Message
         {
             get

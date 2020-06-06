@@ -12,7 +12,6 @@ namespace Ex03.GarageLogic
         NumOfDoors
     }
     
-        
     public enum eCarColors
     {
         Red = 1,
@@ -31,7 +30,6 @@ namespace Ex03.GarageLogic
         public const int k_MaxPsiInElectricCar = 32;
         public const float k_MaxLitersInFuelCar = 60;
         public const float k_MaxBatteryHoursInElectricCar = 2.1f;
-
         private eCarColors? m_CarColor;
         private uint m_NumOfDoors;
 
@@ -42,13 +40,14 @@ namespace Ex03.GarageLogic
             m_NumOfDoors = 0;
         }
         
-        //public properties
+        // public properties
         public eCarColors CarColor
         {
             get
             {
                 return (eCarColors)m_CarColor;
             }
+
             set
             {
                 m_CarColor = value;
@@ -61,11 +60,13 @@ namespace Ex03.GarageLogic
             {
                 return m_NumOfDoors;
             }
+
             set
             {
                 m_NumOfDoors = value;
             }
         }
+
         public override string VehilceType
         {
             get
@@ -79,7 +80,12 @@ namespace Ex03.GarageLogic
             Dictionary<int, string> carParams = new Dictionary<int, string>();
 
             carParams.Add((int)eCarParams.CarColor, string.Format
-                ("Car color: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}", Environment.NewLine, eCarColors.Red, eCarColors.White, eCarColors.Black, eCarColors.Silver));
+                                                                 ("Car color: {0}1.{1}{0}2.{2}{0}3.{3}{0}4.{4}",
+                                                                                            Environment.NewLine,
+                                                                                            eCarColors.Red,
+                                                                                            eCarColors.White,
+                                                                                            eCarColors.Black,
+                                                                                            eCarColors.Silver));
             carParams.Add((int)eCarParams.NumOfDoors, "Number of doors:");
 
             return carParams;
@@ -94,6 +100,7 @@ namespace Ex03.GarageLogic
                         m_NumOfDoors = (uint)Validation.CheckNumberValidation(i_value, k_MinNumOfDoors, k_MaxNumOfDoors);
                         break;
                     }
+
                 case (int)eCarParams.CarColor:
                     {
                         m_CarColor = (eCarColors)Validation.CheckNumberValidation(i_value, 1, k_NumOfColorsOptions);

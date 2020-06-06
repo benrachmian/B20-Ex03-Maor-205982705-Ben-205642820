@@ -28,15 +28,8 @@ namespace Ex03.GarageLogic
             m_IsCarryingDangerousMaterials = false;
             m_TrunkVolume = 0;
         }
-        //public Truck(string i_Model, string i_LicenseNumber, Tire[] i_Tires, EnergySourceSystem i_EnergySourceSystem, bool i_IsCarryingDangerousMaterials, float i_TrunkVolume)
-        //     : base(i_Model, i_LicenseNumber, i_Tires, i_EnergySourceSystem)
-        //{
-        //    m_IsCarryingDangerousMaterials = i_IsCarryingDangerousMaterials;
-        //    m_TrunkVolume = i_TrunkVolume;
-        //}
 
-        //public properties
-
+        // public properties
         public override string VehilceType
         {
             get
@@ -56,18 +49,19 @@ namespace Ex03.GarageLogic
             return truckParams;
         }
 
-        public override void SetSpecificTypeParams(int i_indexInEnum, string i_value)
+        public override void SetSpecificTypeParams(int i_IndexInEnum, string i_Value)
         {
-            switch (i_indexInEnum)
+            switch (i_IndexInEnum)
             {
                 case (int)eTruckParams.TrunkVolume:
                     {
-                        TrunkVolume = Validation.CheckNumberValidation(i_value, k_MinTrunkVolume, k_MaxTrunkVolume);
+                        TrunkVolume = Validation.CheckNumberValidation(i_Value, k_MinTrunkVolume, k_MaxTrunkVolume);
                         break;
                     }
+
                 case (int)eTruckParams.IsCarryingDangerousMaterials:
                     {
-                        int option = Validation.CheckNumberValidation(i_value, 1, 2);
+                        int option = Validation.CheckNumberValidation(i_Value, 1, 2);
 
                         if(option == 1)
                         {
@@ -89,6 +83,7 @@ namespace Ex03.GarageLogic
             {
                 return m_IsCarryingDangerousMaterials;
             }
+
             set
             {
                 m_IsCarryingDangerousMaterials = value;
@@ -101,6 +96,7 @@ namespace Ex03.GarageLogic
             {
                 return m_TrunkVolume;
             }
+
             set
             {
                 m_TrunkVolume = value;
@@ -110,6 +106,7 @@ namespace Ex03.GarageLogic
         public override string ToString()
         {
             StringBuilder truckToString = new StringBuilder();
+
             truckToString.Append(base.ToString());
             truckToString.Append(string.Format(
 @"Is carrying dangerous matirials: {0}

@@ -11,7 +11,6 @@ namespace Ex03.ConsoleUI
     {
         private const int k_NumTypesOfVehicles = 5;
         private const int k_ExitOption = 8;
-
         private GarageSystem m_GarageSystem;
 
         public GarageSystemConsoleUI() // c'tor
@@ -50,36 +49,43 @@ Welcome to the garage system!");
                                 AddNewVehicleToGarage();
                                 break;
                             }
+
                         case 2:
                             {
                                 PresentVehicleLicenseNumberInGarageToConsole();
                                 break;
                             }
+
                         case 3:
                             {
                                 ChangeVehicleStatus();
                                 break;
                             }
+
                         case 4:
                             {
                                 InflateTires();
                                 break;
                             }
+
                         case 5:
                             {
                                 Refuel();
                                 break;
                             }
+
                         case 6:
                             {
                                 Recharge();
                                 break;
                             }
+
                         case 7:
                             {
-                                printAllDetailsToConsole();
+                                PrintAllDetailsToConsole();
                                 break;
                             }
+
                         default:
                             {
                                 Console.WriteLine("Bye-bye!");
@@ -92,12 +98,13 @@ Welcome to the garage system!");
                 {
                     Console.WriteLine(exception.Message);
                     Console.WriteLine("----------------Returning to menu----------------");
-                    //System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(1000);
                 }
-            } while (option != k_ExitOption);
+            }
+            while (option != k_ExitOption);
         }
 
-        public void printAllDetailsToConsole()
+        public void PrintAllDetailsToConsole()
         {
             string licenseNumber;
             VehiclesInGarage vehicleToPresent;
@@ -109,7 +116,7 @@ Welcome to the garage system!");
                 Console.WriteLine(vehicleToPresent.ToString());
                 Console.WriteLine(vehicleToPresent.VehicleInfo.ToString());
             }
-            catch(KeyNotFoundException i_KeyNotFoundException)
+            catch (KeyNotFoundException i_KeyNotFoundException)
             {
                 Console.WriteLine(i_KeyNotFoundException.Message.ToString());
             }
@@ -164,7 +171,8 @@ Please insert how many time you would like to recharge:",
                     Console.WriteLine(i_ArgumentException.Message);
                     isValid = false;
                 }
-            } while (!isValid);
+            }
+            while (!isValid);
 
             Console.WriteLine("You recharge successfully!{0}----------------Returning to menu----------------", Environment.NewLine);
         }
@@ -217,7 +225,8 @@ Please insert how many liters of fuel you would like to refuel:",
                     Console.WriteLine(i_ArgumentException.Message);
                     isValid = false;
                 }
-            } while (!isValid);
+            }
+            while (!isValid);
 
             Console.WriteLine("You refuel successfully!{0}----------------Returning to menu----------------", Environment.NewLine);
         }
@@ -230,11 +239,12 @@ Please insert how many liters of fuel you would like to refuel:",
             m_GarageSystem.InflateTiresToMax(licenseNumber);
             Console.WriteLine("The tires were inflated successfully!");
             Console.WriteLine("----------------Returning to menu----------------");
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
         }
 
         public void ChangeVehicleStatus()
         {
+            int option;
             string licenseNumber;
 
             getLicenseNumber(out licenseNumber);
@@ -246,46 +256,50 @@ Please insert how many liters of fuel you would like to refuel:",
             (int)eVehicleStatuses.InRepair,
             (int)eVehicleStatuses.Repaired,
             (int)eVehicleStatuses.Paid);
-            int Option = GetValidInputs.GetValidInputNumber(1, 3);
+            option = GetValidInputs.GetValidInputNumber(1, 3);
             try
             {
-                m_GarageSystem.ChangeVehicleStatus(licenseNumber, (eVehicleStatuses)Option);
+                m_GarageSystem.ChangeVehicleStatus(licenseNumber, (eVehicleStatuses)option);
                 Console.WriteLine("The vehicle status has changed successfully!");
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.Message);
             }
+
             Console.WriteLine("----------------Returning to menu----------------");
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
         }
 
         public void PresentVehicleLicenseNumberInGarageToConsole()
         {
-            int counter = 0;
+            int counter = 0, option;
+
             Console.WriteLine(
 @"Which status filter would you like to present?
 1. In repair status
 2. Repaired status
 3. Paid status
 4. No filter - Present all");
-            int Option = GetValidInputs.GetValidInputNumber(1, 4);
+            option = GetValidInputs.GetValidInputNumber(1, 4);
             Console.WriteLine("----------------The vehicles are:----------------");
             foreach (VehiclesInGarage vehicle in m_GarageSystem.VehiclesInTheGarage.Values)
             {
-                if (Option == 4 || vehicle.VehicleStatus == (eVehicleStatuses)Option)
+                if (option == 4 || vehicle.VehicleStatus == (eVehicleStatuses)option)
                 {
                     Console.WriteLine(vehicle.VehicleInfo.LicenseNumber);
                     counter++;
                 }
             }
+
             if(counter == 0)
             {
                 Console.WriteLine("There are no vehicles in that status right now!");
             }
-            //System.Threading.Thread.Sleep(1000);
+
+            System.Threading.Thread.Sleep(1000);
             Console.WriteLine("---------------Returning to menu-----------------");
-            //System.Threading.Thread.Sleep(500);
+            System.Threading.Thread.Sleep(500);
         }
 
         public void AddNewVehicleToGarage()
@@ -297,16 +311,17 @@ Please insert how many liters of fuel you would like to refuel:",
             VehiclesInGarage newVehicle = new VehiclesInGarage(ownersName, ownersPhoneNumber, vehicleToAdd);
             m_GarageSystem.AddNewVehicleToGarage(newVehicle);
             Console.WriteLine("----------------Adding new vehicle to the system----------------");
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
             Console.WriteLine("----------------The vehicle was added successfully!-------------");
-            //System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(1000);
             Console.Clear();
         }
 
         private string getOwnersName()
         {
-            string firstName,lastName;
+            string firstName, lastName;
             StringBuilder ownersName = new StringBuilder();
+
             Console.WriteLine("Please insert the vehicle's owner's first name:");
             firstName = GetValidInputs.GetValidStringOnlyLetters(VehiclesInGarage.k_MinCharactersForOwnersName, VehiclesInGarage.k_MaxCharactersForOwnersName);
             Console.WriteLine("Please insert the vehicle's owner's last name:");
@@ -326,21 +341,20 @@ Please insert how many liters of fuel you would like to refuel:",
 
             getVehiliceType(out typeOfVehicle);
             getLicenseNumber(out licenseNumber);
-            if (m_GarageSystem.isIsGarage(licenseNumber))
+            if (m_GarageSystem.IsIsGarage(licenseNumber))
             {
                 throw new Exception("The vehicle is already in garage!");
             }
 
             newVehicle = CreateVehicles.CreateVehicle(typeOfVehicle, licenseNumber);
-
             Console.WriteLine("Please enter the following details: ");
-            PrintMessageAndGetValuesForAllTypeVehicle(newVehicle);
-            PrintMessageAndGetValuesForSpecificTypeVehicle(newVehicle);
+            printMessageAndGetValuesForAllTypeVehicle(newVehicle);
+            printMessageAndGetValuesForSpecificTypeVehicle(newVehicle);
 
             return newVehicle;
         }
 
-        private void PrintMessageAndGetValuesForAllTypeVehicle(Vehicle i_NewVehicle)
+        private void printMessageAndGetValuesForAllTypeVehicle(Vehicle i_NewVehicle)
         {
             string input;
             bool isValid;
@@ -372,11 +386,12 @@ Please insert how many liters of fuel you would like to refuel:",
                         Console.WriteLine(i_FormatException.Message);
                         isValid = false;
                     }
-                } while (!isValid);
+                }
+                while (!isValid);
             }
         }
 
-        private void PrintMessageAndGetValuesForSpecificTypeVehicle(Vehicle i_NewVehicle)
+        private void printMessageAndGetValuesForSpecificTypeVehicle(Vehicle i_NewVehicle)
         {
             string input;
             bool isValid;
@@ -408,7 +423,8 @@ Please insert how many liters of fuel you would like to refuel:",
                         Console.WriteLine(i_FormatException.Message);
                         isValid = false;
                     }
-                } while (!isValid);
+                }
+                while (!isValid);
             }
         }
 
@@ -424,6 +440,7 @@ Please insert how many liters of fuel you would like to refuel:",
             (int)eFuelType.Octan96,
             (int)eFuelType.Octan95,
             (int)eFuelType.Soler);
+
             return (eFuelType)GetValidInputs.GetValidInputNumber(1, FuelSystem.k_NumOfFuelTypes);
         }
 
@@ -451,4 +468,3 @@ Please insert how many liters of fuel you would like to refuel:",
         }
     }
 }
-

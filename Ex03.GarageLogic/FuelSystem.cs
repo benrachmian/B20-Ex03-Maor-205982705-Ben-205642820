@@ -16,13 +16,12 @@ namespace Ex03.GarageLogic
 
     public class FuelSystem : EnergySourceSystem
     {
-        public const int k_NumOfFuelTypes = 4;
-        private eFuelType m_FuelType;
-        private float m_CurrFuelInLiters;
         private readonly float m_MaxFuelInLiters;
+        public const int k_NumOfFuelTypes = 4;
+        private float m_CurrFuelInLiters;
+        private eFuelType m_FuelType;
 
-       
-        public FuelSystem(float i_MaxFuelInLiters , eFuelType i_FuelType)
+        public FuelSystem(float i_MaxFuelInLiters, eFuelType i_FuelType)
         {
             m_MaxFuelInLiters = i_MaxFuelInLiters;
             m_FuelType = i_FuelType;
@@ -36,6 +35,7 @@ namespace Ex03.GarageLogic
             {
                 return m_FuelType;
             }
+
             set
             {
                 m_FuelType = value;
@@ -48,6 +48,7 @@ namespace Ex03.GarageLogic
             {
                 return m_CurrFuelInLiters;
             }
+
             set
             {
                 m_CurrFuelInLiters = value;

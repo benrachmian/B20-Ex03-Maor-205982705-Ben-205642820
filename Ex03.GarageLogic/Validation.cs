@@ -20,19 +20,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public static bool CheckSpecicficString(string i_Input, params object[] arg)
-        {
-            foreach(string option in arg)
-            {
-                if(i_Input == option)
-                {
-                    return true;
-                }
-            }
-
-            throw new FormatException("A name must choose one of the above options. Please try again!");
-        }
-
         private static bool doesContainOnlyLettersAndNumbers(string i_Str)
         {
             bool isOnlyLetters = true;
@@ -48,15 +35,15 @@ namespace Ex03.GarageLogic
             return isOnlyLetters;
         }
 
-        public static int CheckNumberValidation(string i_Number,int i_MinRange, int i_MaxRange)
+        public static int CheckNumberValidation(string i_Number, int i_MinRange, int i_MaxRange)
         {
             int inputNum;
 
-            if(!int.TryParse(i_Number, out inputNum))
+            if (!int.TryParse(i_Number, out inputNum))
             {
                 throw new FormatException("You must enter digits only! Try again!");
             }
-            else if(!(inputNum >= i_MinRange && inputNum <= i_MaxRange))
+            else if (!(inputNum >= i_MinRange && inputNum <= i_MaxRange))
             {
                 throw new ValueOutOfRangeException(i_MaxRange, i_MinRange, eOutOfRangeTypes.Number);
             }
@@ -79,7 +66,5 @@ namespace Ex03.GarageLogic
 
             return inputNum;
         }
-
- 
     }
 }

@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic
 {
     public class BatterySystem : EnergySourceSystem
     {
-        private float m_BatteryTimeRemaining;
         private readonly float m_MaxBatteryTime;
+        private float m_BatteryTimeRemaining;
 
         public BatterySystem(float i_MaxBatteryTime) // c'tor
         {
@@ -25,12 +25,14 @@ namespace Ex03.GarageLogic
                 return m_MaxBatteryTime;
             }
         }
+
         public override float CurrEnergy
         {
             get
             {
                 return m_BatteryTimeRemaining;
             }
+
             set
             {
                 m_BatteryTimeRemaining = value;
@@ -71,16 +73,5 @@ namespace Ex03.GarageLogic
         {
             return string.Format("Battery gauge: {0} hours", m_BatteryTimeRemaining);
         }
-
-        //public override float GetMaxEnergyPossible()
-        //{
-        //    return m_MaxBatteryTime;
-        //}
-
-        //public override void GetParams(List<eVehiclesParameters> i_VehiclesParameters)
-        //{
-        //    i_VehiclesParameters.Add(eVehiclesParameters.BatteryTimeRemaining);
-        //    i_VehiclesParameters.Add(eVehiclesParameters.MaxBatteryTime);
-        //}
     }
 }

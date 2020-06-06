@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
         CurrentEnergyLeft
     }
 
-    abstract public class Vehicle
+    public abstract class Vehicle
     {
         public const int k_MinLicenseNumber = 6;
         public const int k_MaxLicenseNumber = 8;
@@ -28,7 +28,6 @@ namespace Ex03.GarageLogic
         protected float m_EnergyLeftInPrecents;
         protected Tire[] m_Tires;
         protected EnergySourceSystem m_EnergySourceSystem;
-
 
         public Vehicle(string i_LicenseNumber, EnergySourceSystem i_EnergySourceSystem, Tire[] i_Tires)
         {
@@ -62,6 +61,7 @@ namespace Ex03.GarageLogic
             {
                 return m_Model;
             }
+
             set
             {
                 m_Model = value;
@@ -82,12 +82,17 @@ namespace Ex03.GarageLogic
             {
                 return m_EnergyLeftInPrecents;
             }
+
             set
             {
                 m_EnergyLeftInPrecents = value;
             }
         }
-        public abstract string VehilceType { get; }
+
+        public abstract string VehilceType
+        {
+            get;
+        }
 
         public Dictionary<int, string> GetVehicleParams()
         {
@@ -101,38 +106,42 @@ namespace Ex03.GarageLogic
             return vehicleParams;
         }
 
-        public void SetVehicleParameters(int i_indexInEnum, string i_value)
+        public void SetVehicleParameters(int i_IndexInEnum, string i_Value)
         {
-            switch (i_indexInEnum)
+            switch (i_IndexInEnum)
             {
-
                 case (int)eVehiclesParameters.Model:
                     {
-                        Validation.CheckStringValid(i_value, k_MinModelCharacters, k_MaxModelCharacters);
-                        m_Model = i_value;
+                        Validation.CheckStringValid(i_Value, k_MinModelCharacters, k_MaxModelCharacters);
+                        m_Model = i_Value;
                         break;
                     }
+
                 case (int)eVehiclesParameters.ManufacturerName:
                     {
-                        Validation.CheckStringValid(i_value, Tire.k_MinCharsForTireManufacturerName, Tire.k_MaxCharsForTireManufacturerName);
+                        Validation.CheckStringValid(i_Value, Tire.k_MinCharsForTireManufacturerName, Tire.k_MaxCharsForTireManufacturerName);
                         foreach (Tire tire in Tires)
                         {
-                            tire.ManufacturerName = i_value;
+                            tire.ManufacturerName = i_Value;
                         }
+
                         break;
                     }
+
                 case (int)eVehiclesParameters.CurrentPSI:
                     {
-                        float currPSI = Validation.CheckNumberValidation(i_value, 0, m_Tires[0].MaxPSI);
+                        float currPSI = Validation.CheckNumberValidation(i_Value, 0, m_Tires[0].MaxPSI);
                         foreach (Tire tire in Tires)
                         {
                             tire.CurrentPSI = currPSI;
                         }
+
                         break;
                     }
+
                 case (int)eVehiclesParameters.CurrentEnergyLeft:
                     {
-                        float currEnergy = Validation.CheckNumberValidation(i_value, 0, m_EnergySourceSystem.MaxEnergyPossible);
+                        float currEnergy = Validation.CheckNumberValidation(i_Value, 0, m_EnergySourceSystem.MaxEnergyPossible);
                         m_EnergySourceSystem.CurrEnergy = currEnergy; 
                         m_EnergyLeftInPrecents = currEnergy / m_EnergySourceSystem.MaxEnergyPossible; /// while printed it's multiplied by 100 
                         break;
@@ -142,11 +151,12 @@ namespace Ex03.GarageLogic
 
         public abstract Dictionary<int, string> GetParams();
 
-        public abstract void SetSpecificTypeParams(int i_indexInEnum, string i_value);
+        public abstract void SetSpecificTypeParams(int i_IndexInEnum, string i_Value);
 
         public override string ToString()
         {
             StringBuilder vehicleToString = new StringBuilder();
+
             vehicleToString.Append(string.Format(
 @"Vehicle's type: {0}
 Energy system type: {1}

@@ -6,20 +6,13 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    //public enum eTireParameters
-    //{
-    //    ManufacturerName,
-    //    CurrentPSI,
-    //    MaxValidPSI
-    //}
-
     public class Tire
     {
+        private readonly float m_MaxValidPSI;
         public const int k_MinCharsForTireManufacturerName = 4;
         public const int k_MaxCharsForTireManufacturerName = 50;
         private string m_ManufacturerName;
         private float m_CurrentPSI;
-        private readonly float m_MaxValidPSI;
 
         public Tire (float i_MaxValidPSI) // c'tor
         {
@@ -28,13 +21,14 @@ namespace Ex03.GarageLogic
             m_CurrentPSI = 0;
         }
 
-        //properties
+        // properties
         public float CurrentPSI
         {
             get
             {
                 return m_CurrentPSI;
             }
+
             set
             {
                 m_CurrentPSI = value;
@@ -55,6 +49,7 @@ namespace Ex03.GarageLogic
             {
                 return m_ManufacturerName;
             }
+
             set
             {
                 m_ManufacturerName = value;

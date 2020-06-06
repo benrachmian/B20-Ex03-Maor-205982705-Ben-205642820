@@ -9,19 +9,6 @@ namespace Ex03.ConsoleUI
 {
     class GetValidInputs
     {
-        //public static float GetPositiveNumber()
-        //{
-        //    float inputNum;
-
-        //    while (!float.TryParse(Console.ReadLine(), out inputNum) || inputNum < 0)
-        //    {
-        //        Console.WriteLine("You must insert positive number! Try again!");
-        //        throw new FormatException("You must insert positive number! Try again!");
-        //    }
-
-        //    return inputNum;
-        //}
-
         public static int GetValidInputNumber(int i_MinRange, int i_MaxRange)
         {
             string inputStr;
@@ -36,9 +23,11 @@ namespace Ex03.ConsoleUI
                 {
                     Console.WriteLine("You must enter digits only! Try again!");
                 }
+
                 inputStr = Console.ReadLine();
                 parseSuccessed = int.TryParse(inputStr, out inputNum);
             }
+
             return inputNum;
         }
 
@@ -86,19 +75,6 @@ namespace Ex03.ConsoleUI
             return inputNum;
         }
 
-        //private static bool isInNumberRange(int i_MinRange, int i_MaxRange, int i_Input)
-        //{
-        //    bool isValid = i_Input >= i_MinRange && i_Input <= i_MaxRange;
-
-        //    if (!isValid)
-        //    {
-        //        throw new ValueOutOfRangeException(i_MaxRange, i_MinRange);
-        //        //Console.WriteLine("You must enter a number between {0} and {1}. Please try again!", i_MinRange, i_MaxRange);
-        //    }
-
-        //    return isValid;
-        //}
-
         private static bool isInNumberRange(float i_MinRange, float i_MaxRange, float i_Input)
         {
             bool isValid = i_Input >= i_MinRange && i_Input <= i_MaxRange;
@@ -111,54 +87,25 @@ namespace Ex03.ConsoleUI
             return isValid;
         }
 
-        public static string GetValidTireManufacturer(int i_MinLenght, int i_MaxLenght)
-        {
-            return GetValidStringOnlyLetters(i_MinLenght, i_MaxLenght);
-        }
-
         public static string GetValidPhoneNumber()
         {
             int phoneNumberInInt;
             StringBuilder phoneNumber = new StringBuilder(11);
             string tempPhoneNumber = Console.ReadLine();
 
-            while(tempPhoneNumber.Length!=10 || tempPhoneNumber[0]!='0' || !int.TryParse(tempPhoneNumber, out phoneNumberInInt))
+            while (tempPhoneNumber.Length != 10 || tempPhoneNumber[0] != '0' || !int.TryParse(tempPhoneNumber, out phoneNumberInInt))
             {
                 Console.WriteLine(
 @"The phone number must contain exactly 10 digits that begin with '0'.
 No other characters are allowed! Please try again!");
                 tempPhoneNumber = Console.ReadLine();
             }
+
             phoneNumber.Append(tempPhoneNumber);
             phoneNumber.Insert(3, '-');
+
             return phoneNumber.ToString();
         }
-
-        public static string GetValidString(string i_TargetName, int i_MinRange, int i_MaxRange)
-        {
-            string inputString;
-            bool isValid = false;
-
-            do
-            {
-                inputString = Console.ReadLine();
-                if (inputString.Length < i_MinRange || inputString.Length > i_MaxRange)
-                {
-                    Console.WriteLine("A {0} name must be at least {1} and maximum {2} characters. Please try again!", i_TargetName, i_MinRange, i_MaxRange);
-                }
-                else if (!doesContainOnlyLettersAndNumbers(inputString))
-                {
-                    Console.WriteLine("A {0} name must contain only letters or numbers.Please try again!", i_TargetName);
-                }
-                else
-                {
-                    isValid = true;
-                }
-            } while (!isValid);
-
-            return inputString;
-        }
-
 
         public static string GetValidStringOnlyLetters(int i_MinRange, int i_MaxRange)
         {
@@ -180,7 +127,8 @@ No other characters are allowed! Please try again!");
                 {
                     isValid = true;
                 }
-            } while (!isValid);
+            }
+            while (!isValid);
 
             return inputString;
         }
@@ -215,27 +163,9 @@ No other characters are allowed! Please try again!");
             return isOnlyLetters;
         }
 
-        /// CHECKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK
-        /*public static float getvalidpsi(float i_maxpsipossible) 
-        {
-            float validpsi;
-            bool parsesuccessed = !float.tryparse(console.readline(), out validpsi);
-            while (!parsesuccessed || isinnumberrange(0, i_maxpsipossible, validpsi))
-            {
-                if (!parsesuccessed)
-                {
-                    console.writeline("you must enter only numbers!");
-                }
-                parsesuccessed = !float.tryparse(console.readline(), out validpsi);
-            }
-
-            return validpsi;
-        }
-        */
-
         public static string GetValidLicenseNumber()
         {
-            return GetValidLengthString(Vehicle.k_MinLicenseNumber,Vehicle.k_MaxLicenseNumber);
+            return GetValidLengthString(Vehicle.k_MinLicenseNumber, Vehicle.k_MaxLicenseNumber);
         }
     }
 }
