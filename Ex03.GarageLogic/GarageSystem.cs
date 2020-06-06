@@ -36,6 +36,20 @@ namespace Ex03.GarageLogic
             return foundVehicle;
         }
 
+        public bool isIsGarage(string i_LicenseNumber)
+        {
+            bool inGarage = false;
+            foreach(string vehicleLicenseNumber in m_VehiclesInGarage.Keys)
+            {
+                if(vehicleLicenseNumber == i_LicenseNumber)
+                {
+                    inGarage = true;
+                    break;
+                }
+            }
+            return inGarage;
+        }
+
         public void AddNewVehicleToGarage(VehiclesInGarage i_NewVehicleToGarage) 
         {
             VehiclesInGarage existVehicleInGarage;

@@ -107,7 +107,6 @@ Welcome to the garage system!");
                 vehicleToPresent = m_GarageSystem.GetVehicleByLicenseNumber(licenseNumber);
                 Console.WriteLine(vehicleToPresent.ToString());
                 Console.WriteLine(vehicleToPresent.VehicleInfo.ToString());
-                
             }
             catch(KeyNotFoundException i_KeyNotFoundException)
             {
@@ -356,7 +355,13 @@ Please insert how many liters of fuel you would like to refuel:",
 
             getVehiliceType(out typeOfVehicle);
             getLicenseNumber(out licenseNumber);
+            if (m_GarageSystem.isIsGarage(licenseNumber))
+            {
+                throw new Exception("The vehicle is already in garage!");
+            }
+
             newVehicle = CreateVehicles.CreateVehicle(typeOfVehicle, licenseNumber);
+
             Console.WriteLine("Please enter the following details: ");
             PrintMessageAndGetValuesForAllTypeVehicle(newVehicle);
             PrintMessageAndGetValuesForSpecificTypeVehicle(newVehicle);
